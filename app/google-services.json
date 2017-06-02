@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "213195386510",
+    "firebase_url": "https://mandc-46a7f.firebaseio.com",
+    "project_id": "mandc-46a7f",
+    "storage_bucket": "mandc-46a7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213195386510:android:0ba0c4d2085d330e",
+        "android_client_info": {
+          "package_name": "muffsandchocss.com.mandc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213195386510-5b9b8hje1m4pu3j4dsd1jr67q85249u7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "muffsandchocss.com.mandc",
+            "certificate_hash": "49f2728abebbc0add96a773536686e40e5b89822"
+          }
+        },
+        {
+          "client_id": "213195386510-8nqr98vh67o75m8ac7nghbkt0vspsqv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe5RppDqvdSWWBnBb4PjQeBM_CACwNDtg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213195386510-8nqr98vh67o75m8ac7nghbkt0vspsqv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
