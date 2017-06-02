@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        final Intent intent = new Intent(this, RegisterUserActivity.class);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -92,12 +93,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
         //Register user
-        Button bRegister = (Button) findViewById(R.id.btnRegister);
-        bRegister.setOnClickListener(new OnClickListener() {
+        Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        btnSignUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(this, RegisterUserActivity.class);
-
+                startActivity(intent);
 
             }
         });

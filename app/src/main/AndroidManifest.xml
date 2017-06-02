@@ -28,7 +28,11 @@
             android:label="@string/title_activity_register_user" />
         <activity
             android:name=".UpdateUserProfileActivity"
-            android:label="@string/title_activity_update_user_profile"></activity>
+            android:label="@string/title_activity_update_user_profile" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
