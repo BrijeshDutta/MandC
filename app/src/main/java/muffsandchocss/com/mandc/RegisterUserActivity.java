@@ -100,20 +100,6 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
         populateAutoComplete();
 
 
-
-        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-
         buttonSignUp = (Button) findViewById(R.id.btnRegisterUserActivitySignUp);
         buttonSignUp.setOnClickListener(new OnClickListener() {
             @Override
@@ -130,8 +116,8 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
     private void userSignUp() {
         String email  = mEmailView.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        //progressDialog.setMessage("Registering user....");
-        //progressDialog.show();
+        progressDialog.setMessage("Registering user....");
+        progressDialog.show();
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -141,6 +127,7 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
                     startActivity(intentUpdateUserProfile);
                 } else {
                     Toast.makeText(RegisterUserActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });
