@@ -3,6 +3,7 @@ package muffsandchocss.com.mandc;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -29,6 +30,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,21 +66,42 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+
     private View mProgressView;
     private View mLoginFormView;
+
+    //
+    private Intent intentUpdateUserProfile;
+
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
+    private Button buttonSignUp;
+    private ProgressDialog progressDialog;
+
+    //Firebase authentication
+
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
-        final Intent intentUpdateUserProfile = new Intent(this,UpdateUserProfileActivity.class);
+
+        progressDialog = new ProgressDialog(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+        intentUpdateUserProfile = new Intent(this,UpdateUserProfileActivity.class);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        editTextPassword = (EditText) findViewById(R.id.password);
+        editTextConfirmPassword = (EditText) findViewById(R.id.txtConfirmPassword);
+
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -86,16 +114,36 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
 
 
 
-        Button btnSignUp = (Button) findViewById(R.id.btnRegisterUserActivitySignUp);
-        btnSignUp.setOnClickListener(new OnClickListener() {
+        buttonSignUp = (Button) findViewById(R.id.btnRegisterUserActivitySignUp);
+        buttonSignUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intentUpdateUserProfile);
+                userSignUp();
+
             }
         });
 
         mLoginFormView = findViewById(R.id.register_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void userSignUp() {
+        String email  = mEmailView.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        //progressDialog.setMessage("Registering user....");
+        //progressDialog.show();
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()){
+                    Toast.makeText(RegisterUserActivity.this,"Registered Successfully ",Toast.LENGTH_LONG).show();
+                    startActivity(intentUpdateUserProfile);
+                } else {
+                    Toast.makeText(RegisterUserActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void populateAutoComplete() {
@@ -154,19 +202,19 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
 
         // Reset errors.
         mEmailView.setError(null);
-        mPasswordView.setError(null);
+        editTextPassword.setError(null);
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String password = editTextPassword.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            editTextPassword.setError(getString(R.string.error_invalid_password));
+            focusView = editTextPassword;
             cancel = true;
         }
 
@@ -339,8 +387,8 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                editTextPassword.setError(getString(R.string.error_incorrect_password));
+                editTextPassword.requestFocus();
             }
         }
 
