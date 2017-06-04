@@ -32,7 +32,7 @@
             android:label="@string/title_activity_update_user_profile" />
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home"
+            android:label="@string/muffs_and_chocss"
             android:theme="@style/AppTheme"></activity>
     </application>
 

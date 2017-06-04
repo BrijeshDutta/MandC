@@ -6,7 +6,9 @@
         <item name="android:background">@android:color/holo_red_dark</item>
         <item name="colorPrimary">#3F51B5</item>
         <item name="colorPrimaryDark">#e2dad8</item>
-        <item name="colorAccent">#00B0FF</item>
+        <item name="colorAccent">#f5f8f9</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
