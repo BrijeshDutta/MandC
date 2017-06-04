@@ -1,5 +1,6 @@
 package muffsandchocss.com.mandc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,12 +27,17 @@ public class HomeActivity extends AppCompatActivity
     private TextView textViewUserName;
     private TextView textViewUserEmailId;
 
+    private Intent intentLoginActivity;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         //
+        intentLoginActivity = new Intent(this,LoginActivity.class);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -106,7 +112,15 @@ public class HomeActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_logout) {
+            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser != null){
+                firebaseAuth.signOut();
+                finish();
+                startActivity(intentLoginActivity);
+            }
+
+
 
         } else if (id == R.id.nav_manage) {
 

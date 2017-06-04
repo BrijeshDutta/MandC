@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +71,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    private Intent intentHomeActivity;
+
+    //Firebase Object
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        intentHomeActivity = new Intent(this,HomeActivity.class);
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() !=null){
+
+            startActivity(intentHomeActivity);
+        }
+
+
         // Set up the login form.
-        final Intent intent = new Intent(this, RegisterUserActivity.class);
+        final Intent intentRegisterUser = new Intent(this, RegisterUserActivity.class);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -85,25 +105,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        //Sign In
+        Button buttonSignIn = (Button) findViewById(R.id.btnSignIn);
+        buttonSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                userLogin();
+                //attemptLogin();
             }
         });
+
         //Register user
         Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
         btnSignUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(intent);
+                finish();
+                startActivity(intentRegisterUser);
 
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void userLogin() {
+
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
+
+
+
+        firebaseAuth.signInWithEmailAndPassword(email,password)
+        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this,"Logged In Successfully",Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(intentHomeActivity);
+
+                } else {
+                    Toast.makeText(LoginActivity.this,"Error while login " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     private void populateAutoComplete() {
