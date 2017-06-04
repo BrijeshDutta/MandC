@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_place_order"
             android:icon="@drawable/purchaseorder"
             android:title="Place Order" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_order_summary"
             android:icon="@drawable/ordersummary"
             android:title="Order Summary" />
         <item
