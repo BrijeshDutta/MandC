@@ -5,10 +5,10 @@ package muffsandchocss.com.fragments;
  */
 
 public class OrderDetails {
-    String dishType;
-    String dryFruits;
-    int quantity;
-    String deliveryDate;
+    public String dishType;
+    public String dryFruits;
+    public int quantity;
+    public String deliveryDate;
     public OrderDetails() {
 
     }

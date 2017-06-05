@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="android:background">@android:color/holo_red_dark</item>
         <item name="colorPrimary">#fbfbfc</item>
-        <item name="colorPrimaryDark">#802d18</item>
+        <item name="colorPrimaryDark">#e2dad8</item>
         <item name="colorAccent">#f5f8f9</item>
         <item name="actionMenuTextColor">@android:color/white</item>
         <item name="android:actionMenuTextColor">@android:color/white</item>
