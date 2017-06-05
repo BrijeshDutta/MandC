@@ -1,5 +1,6 @@
 package muffsandchocss.com.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -11,30 +12,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import muffsandchocss.com.mandc.R;
 
 public class PlaceOrderFragment extends Fragment {
 
 
-    String [] SPINNER_LIST_DISH = {"Choclates","Sub way","Burger"};
+    String [] SPINNER_LIST_DISH = {"Choclates"};
 
     //Dry fruit selection
     EditText editTextSelectDryFruits;
 
+    //Delivery date picker
+    EditText editTextDeliveryDate;
+    int year_x,month_x,date_x;
+    static final int DILOG_ID = 0;
+    Calendar myCalendar;
+
     String [] listDryFruits;
     boolean [] checkedDryFruits;
     ArrayList<Integer> userSelectedDryFruits = new ArrayList<>();
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Place Order");
+        getActivity().setTitle(getString(R.string.place_order_label));
 
     }
 
@@ -48,8 +60,61 @@ public class PlaceOrderFragment extends Fragment {
         //Show Dry fruits selection
         showDryFruitSelection(fragmentView);
 
+        //
+        showDeliveryDatePicker(fragmentView);
         return  fragmentView;
 
+    }
+
+    private void showDeliveryDatePicker(View fragmentView) {
+
+        editTextDeliveryDate = (EditText)fragmentView.findViewById(R.id.deliveryDate);
+        editTextDeliveryDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                datePicker();
+            }
+        });
+        editTextDeliveryDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    datePicker();
+                }
+            }
+        });
+    }
+
+    private void datePicker(){
+        // TODO Auto-generated method stub
+
+        myCalendar = Calendar.getInstance();
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                Calendar myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+        new DatePickerDialog(getActivity(), date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+    private void updateLabel() {
+
+        String myFormat = "MM/dd/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editTextDeliveryDate.setText(sdf.format(myCalendar.getTime()));
     }
 
     private void showDishDropDown(View fragmentView) {
@@ -134,7 +199,7 @@ public class PlaceOrderFragment extends Fragment {
         });
         AlertDialog alertDialog1 = alertDialog.create();
         alertDialog1.show();
-        Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
+
     }
 
 

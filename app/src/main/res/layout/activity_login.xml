@@ -75,10 +75,12 @@
 
             <Button
                 android:id="@+id/btnSignUp"
+                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="16.53"
-                android:text="Sign Up" />
+                android:text="Sign Up"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </ScrollView>
