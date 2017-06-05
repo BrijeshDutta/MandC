@@ -105,7 +105,7 @@ public class PlaceOrderFragment extends Fragment {
             }
 
         };
-        new DatePickerDialog(getActivity(), date, myCalendar
+        new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Light_Dialog,date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
