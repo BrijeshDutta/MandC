@@ -32,6 +32,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="25dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+
                     android:hint="Select dish" android:textColor="@android:color/white"
                     />
 
@@ -56,6 +59,8 @@
                     android:layout_below="@+id/dish"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -79,10 +84,33 @@
                     android:layout_below="@+id/dish"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     />
 
             </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/btnPlaceOrder"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Place Order"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
+            <Button
+                android:id="@+id/btnResetOrderDetails"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Reset Order"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                />
         </LinearLayout>
     </ScrollView>
 

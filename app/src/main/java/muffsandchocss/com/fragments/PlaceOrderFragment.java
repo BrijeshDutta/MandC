@@ -71,60 +71,70 @@ public class PlaceOrderFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(R.string.title_select_dryfruits);
-                    alertDialog.setMultiChoiceItems(listDryFruits, checkedDryFruits, new DialogInterface.OnMultiChoiceClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                            if (isChecked){
-
-                                //Check o avoid duplication
-                                if (!userSelectedDryFruits.contains(which) ){
-                                    //add the the checked value
-                                    userSelectedDryFruits.add(which);
-                                } else {
-                                    userSelectedDryFruits.remove(which);
-                                }
-                            }
-                        }
-                    });
-                    alertDialog.setCancelable(false);
-                    alertDialog.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String item ="";
-                            for (int i = 0; i<userSelectedDryFruits.size();i++){
-                                item = item + listDryFruits[userSelectedDryFruits.get(i)];
-                                if (i != userSelectedDryFruits.size()-1){
-                                    item = item + ", ";
-                                }
-                            }
-                            editTextSelectDryFruits.setText(item);
-                        }
-                    });
-                    alertDialog.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alertDialog.setNeutralButton(R.string.clearall_label, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            for (int i = 0 ; i < checkedDryFruits.length; i++){
-                                checkedDryFruits [i] = false;
-                                userSelectedDryFruits.clear();
-                                editTextSelectDryFruits.setText("");
-                            }
-                        }
-                    });
-                    AlertDialog alertDialog1 = alertDialog.create();
-                    alertDialog1.show();
-                    Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
+                    dryFruitMultiSelection();
                 }
             }
         });
+        editTextSelectDryFruits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dryFruitMultiSelection();
+            }
+        });
 
+    }
+    private  void dryFruitMultiSelection(){
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle(R.string.title_select_dryfruits);
+        alertDialog.setMultiChoiceItems(listDryFruits, checkedDryFruits, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if (isChecked){
+
+                    //Check o avoid duplication
+                    if (!userSelectedDryFruits.contains(which) ){
+                        //add the the checked value
+                        userSelectedDryFruits.add(which);
+                    } else {
+                        userSelectedDryFruits.remove(which);
+                    }
+                }
+            }
+        });
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String item ="";
+                for (int i = 0; i<userSelectedDryFruits.size();i++){
+                    item = item + listDryFruits[userSelectedDryFruits.get(i)];
+                    if (i != userSelectedDryFruits.size()-1){
+                        item = item + ", ";
+                    }
+                }
+                editTextSelectDryFruits.setText(item);
+            }
+        });
+        alertDialog.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialog.setNeutralButton(R.string.clearall_label, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int i = 0 ; i < checkedDryFruits.length; i++){
+                    checkedDryFruits [i] = false;
+                    userSelectedDryFruits.clear();
+                    editTextSelectDryFruits.setText("");
+                }
+            }
+        });
+        AlertDialog alertDialog1 = alertDialog.create();
+        alertDialog1.show();
+        Toast.makeText(getActivity(), "got the focus", Toast.LENGTH_LONG).show();
     }
 
 
