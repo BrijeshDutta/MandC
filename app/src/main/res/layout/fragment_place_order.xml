@@ -44,6 +44,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                    android:id="@+id/choclateType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="@string/choclate_type_label"
+                    android:textColor="@android:color/white"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
                 <EditText
                     android:id="@+id/selectDryFruits"
                     android:layout_width="match_parent"
@@ -61,6 +80,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -115,15 +136,27 @@
                     />
 
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <android.support.v7.widget.AppCompatCheckBox
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/specialInstructions"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Address as updated in profile"
+                    android:layout_height="200px"
+                    android:layout_marginTop="25dp"
+                    android:hint="Special preparation instructions !!"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_below="@+id/dish"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    />
 
             </android.support.design.widget.TextInputLayout>
             <Button

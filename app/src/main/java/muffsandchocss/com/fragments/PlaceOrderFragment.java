@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,10 +39,15 @@ public class PlaceOrderFragment extends Fragment {
 
 
     String [] SPINNER_LIST_DISH = {"Choclates"};
+    String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milky"};
+
 
     MaterialBetterSpinner materialBetterSpinner;
     //Dry fruit selection
     EditText editTextSelectDryFruits;
+
+    //Choclate type
+    MaterialBetterSpinner spinnerChoclatePicker;
 
     //Quantity
     EditText editTextQuantity;
@@ -78,6 +84,9 @@ public class PlaceOrderFragment extends Fragment {
 
         //Show dish drop down
         showDishDropDown(fragmentView);
+
+        //Show choclate type dropdown
+        showChoclateDropDown(fragmentView);
 
         //Show Dry fruits selection
         showDryFruitSelection(fragmentView);
@@ -179,6 +188,15 @@ public class PlaceOrderFragment extends Fragment {
         materialBetterSpinner = (MaterialBetterSpinner)fragmentView.findViewById(R.id.dish);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_LIST_DISH);
         materialBetterSpinner.setAdapter(adapter);
+    }
+
+    private void showChoclateDropDown(View fragmentView) {
+
+        //Drop down to select type of dish
+        spinnerChoclatePicker = (MaterialBetterSpinner) fragmentView.findViewById(R.id.choclateType);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_CHOCLATE_TYPE);
+        spinnerChoclatePicker.setAdapter(adapter);
     }
 
     private void showDryFruitSelection(View fragmentView){
