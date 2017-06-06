@@ -1,6 +1,7 @@
 package muffsandchocss.com.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -78,6 +79,9 @@ public class PlaceOrderFragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
 
+    //Progress dailog for placiing order
+    ProgressDialog progressDialogPlaceOrder;
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -89,7 +93,7 @@ public class PlaceOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_place_order, container, false);
-
+        progressDialogPlaceOrder = new ProgressDialog(getActivity());
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -134,6 +138,10 @@ public class PlaceOrderFragment extends Fragment {
                 String deliveryDate = editTextDeliveryDate.getText().toString().trim();
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
+                //Progress dailog
+                progressDialogPlaceOrder.setMessage("Placing Order...");
+                progressDialogPlaceOrder.show();
+
                 //Getting firebase user details
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 //Database initialization
@@ -146,7 +154,7 @@ public class PlaceOrderFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
-
+                            progressDialogPlaceOrder.dismiss();
                             //Summary Fragment display
                             Fragment fragment = new OrderSummaryFragment();
 
@@ -164,7 +172,7 @@ public class PlaceOrderFragment extends Fragment {
                     }
                 });
 
-                Toast.makeText(getActivity(),"Place Order",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(),"Place Order",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -240,8 +248,6 @@ public class PlaceOrderFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 sUserSelectedDish = materialBetterSpinnerDishSelecter.getText().toString().trim();
-
-                Toast.makeText(getActivity(),sUserSelectedDish,Toast.LENGTH_LONG).show();
             }
         });
     }
