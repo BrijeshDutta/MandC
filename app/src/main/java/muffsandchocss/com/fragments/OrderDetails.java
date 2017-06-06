@@ -6,17 +6,21 @@ package muffsandchocss.com.fragments;
 
 public class OrderDetails {
     public String dishType;
+    public String choclateType;
     public String dryFruits;
     public int quantity;
     public String deliveryDate;
+    public String specialPreComments;
     public OrderDetails() {
 
     }
 
-    public OrderDetails(String dishType, String dryFruits, int quantity, String deliveryDate) {
+    public OrderDetails(String dishType, String choclateType, String dryFruits, int quantity, String deliveryDate,String specialPreComments) {
         this.dishType = dishType;
+        this.choclateType = choclateType;
         this.dryFruits = dryFruits;
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
+        this.specialPreComments = specialPreComments;
     }
 }

@@ -9,13 +9,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -42,19 +46,26 @@ public class PlaceOrderFragment extends Fragment {
     String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milky"};
 
 
-    MaterialBetterSpinner materialBetterSpinner;
+    MaterialBetterSpinner materialBetterSpinnerDishSelecter;
+    String sUserSelectedDish;
     //Dry fruit selection
     EditText editTextSelectDryFruits;
 
     //Choclate type
     MaterialBetterSpinner spinnerChoclatePicker;
+    String sUserSlectedChoclateType;
 
     //Quantity
     EditText editTextQuantity;
+
     //Delivery date picker
     EditText editTextDeliveryDate;
     Calendar myCalendar;
 
+    //Special preparation Comments
+
+    EditText editTextSpecialPreComments;
+    String sSpecialPreComments;
     //Place order Button
     Button buttonPlaceOrder;
 
@@ -95,9 +106,20 @@ public class PlaceOrderFragment extends Fragment {
         editTextQuantity = (EditText)fragmentView.findViewById(R.id.quantity);
 
         showDeliveryDatePicker(fragmentView);
+
+        //Get Special preparation comments
+        //getSpecialPreComments(fragmentView);
+
+        editTextSpecialPreComments = (EditText) fragmentView.findViewById(R.id.specialInstructions);
+
         placeOrderButton(fragmentView);
         return  fragmentView;
 
+    }
+
+    private void getSpecialPreComments(View fragmentView) {
+
+        //sSpecialPreComments = editTextSpecialPreComments.getText().toString().trim();
     }
 
     private void placeOrderButton(View fragmentView) {
@@ -105,12 +127,15 @@ public class PlaceOrderFragment extends Fragment {
         buttonPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dishType = "Chocklate";
+                String dishType = sUserSelectedDish;
+                String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 int quantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
                 String deliveryDate = editTextDeliveryDate.getText().toString().trim();
+                String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
+                Toast.makeText(getActivity(),specialPreComments,Toast.LENGTH_SHORT).show();
 
-                OrderDetails orderDetails = new OrderDetails(dishType,sDryFruits,quantity,deliveryDate);
+                OrderDetails orderDetails = new OrderDetails(dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -185,9 +210,27 @@ public class PlaceOrderFragment extends Fragment {
     private void showDishDropDown(View fragmentView) {
 
         //Drop down to select type of dish
-        materialBetterSpinner = (MaterialBetterSpinner)fragmentView.findViewById(R.id.dish);
+        materialBetterSpinnerDishSelecter = (MaterialBetterSpinner)fragmentView.findViewById(R.id.dish);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_LIST_DISH);
-        materialBetterSpinner.setAdapter(adapter);
+        materialBetterSpinnerDishSelecter.setAdapter(adapter);
+        materialBetterSpinnerDishSelecter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sUserSelectedDish = materialBetterSpinnerDishSelecter.getText().toString().trim();
+
+                Toast.makeText(getActivity(),sUserSelectedDish,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void showChoclateDropDown(View fragmentView) {
@@ -197,6 +240,23 @@ public class PlaceOrderFragment extends Fragment {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_CHOCLATE_TYPE);
         spinnerChoclatePicker.setAdapter(adapter);
+        spinnerChoclatePicker.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                sUserSlectedChoclateType = spinnerChoclatePicker.getText().toString().trim();
+            }
+        });
     }
 
     private void showDryFruitSelection(View fragmentView){
