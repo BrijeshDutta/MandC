@@ -21,8 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -138,9 +140,7 @@ public class PlaceOrderFragment extends Fragment {
                 String deliveryDate = editTextDeliveryDate.getText().toString().trim();
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
-                //Progress dailog
-                progressDialogPlaceOrder.setMessage("Placing Order...");
-                progressDialogPlaceOrder.show();
+
 
                 //Getting firebase user details
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -149,10 +149,14 @@ public class PlaceOrderFragment extends Fragment {
                 String orderId = databaseReference.push().getKey();
                 OrderDetails orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
+                //Progress dailog
+                progressDialogPlaceOrder.setMessage("Placing Order...");
+                progressDialogPlaceOrder.show();
                 databaseReference.child("OrderDetails"+orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
+
                             Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
                             progressDialogPlaceOrder.dismiss();
                             //Summary Fragment display
