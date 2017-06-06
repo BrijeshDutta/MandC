@@ -133,7 +133,6 @@ public class PlaceOrderFragment extends Fragment {
                 int quantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
                 String deliveryDate = editTextDeliveryDate.getText().toString().trim();
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
-                Toast.makeText(getActivity(),specialPreComments,Toast.LENGTH_SHORT).show();
 
                 OrderDetails orderDetails = new OrderDetails(dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
