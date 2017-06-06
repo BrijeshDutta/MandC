@@ -5,6 +5,8 @@ package muffsandchocss.com.fragments;
  */
 
 public class OrderDetails {
+
+    public String orderId;
     public String dishType;
     public String choclateType;
     public String dryFruits;
@@ -15,7 +17,8 @@ public class OrderDetails {
 
     }
 
-    public OrderDetails(String dishType, String choclateType, String dryFruits, int quantity, String deliveryDate,String specialPreComments) {
+    public OrderDetails(String orderId,String dishType, String choclateType, String dryFruits, int quantity, String deliveryDate,String specialPreComments) {
+        this.orderId = orderId;
         this.dishType = dishType;
         this.choclateType = choclateType;
         this.dryFruits = dryFruits;

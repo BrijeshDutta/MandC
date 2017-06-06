@@ -90,8 +90,7 @@ public class PlaceOrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_place_order, container, false);
 
-        //Database initialization
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Show dish drop down
@@ -135,11 +134,14 @@ public class PlaceOrderFragment extends Fragment {
                 String deliveryDate = editTextDeliveryDate.getText().toString().trim();
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
-                OrderDetails orderDetails = new OrderDetails(dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
-
+                //Getting firebase user details
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                //Database initialization
+                databaseReference = FirebaseDatabase.getInstance().getReference("UserUniqueId"+firebaseUser.getUid());
+                String orderId = databaseReference.push().getKey();
+                OrderDetails orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
-                databaseReference.child(firebaseUser.getUid()).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                databaseReference.child("OrderDetails"+orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
