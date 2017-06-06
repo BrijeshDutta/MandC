@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -143,6 +144,17 @@ public class PlaceOrderFragment extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
+
+                            //Summary Fragment display
+                            Fragment fragment = new OrderSummaryFragment();
+
+                            if (fragment !=null){
+                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                fragmentTransaction.replace(R.id.content_frame,fragment);
+                                fragmentTransaction.commit();
+
+                            }
+
 
                         }else {
                             Toast.makeText(getActivity(),"Failed to place order " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
