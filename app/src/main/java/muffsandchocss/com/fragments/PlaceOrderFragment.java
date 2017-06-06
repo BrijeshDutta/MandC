@@ -42,7 +42,7 @@ import muffsandchocss.com.mandc.UpdateUserProfileActivity;
 public class PlaceOrderFragment extends Fragment {
 
 
-    String [] SPINNER_LIST_DISH = {"Choclates"};
+    String [] SPINNER_LIST_DISH = {"Choclates","Muffins"};
     String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milky"};
 
 
@@ -210,7 +210,7 @@ public class PlaceOrderFragment extends Fragment {
 
         //Drop down to select type of dish
         materialBetterSpinnerDishSelecter = (MaterialBetterSpinner)fragmentView.findViewById(R.id.dish);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_LIST_DISH);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, SPINNER_LIST_DISH);
         materialBetterSpinnerDishSelecter.setAdapter(adapter);
         materialBetterSpinnerDishSelecter.addTextChangedListener(new TextWatcher() {
             @Override
@@ -237,7 +237,7 @@ public class PlaceOrderFragment extends Fragment {
         //Drop down to select type of dish
         spinnerChoclatePicker = (MaterialBetterSpinner) fragmentView.findViewById(R.id.choclateType);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_dropdown_item_1line, SPINNER_CHOCLATE_TYPE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, SPINNER_CHOCLATE_TYPE);
         spinnerChoclatePicker.setAdapter(adapter);
         spinnerChoclatePicker.addTextChangedListener(new TextWatcher() {
             @Override
