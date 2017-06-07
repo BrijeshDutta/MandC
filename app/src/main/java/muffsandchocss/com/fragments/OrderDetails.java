@@ -26,4 +26,32 @@ public class OrderDetails {
         this.deliveryDate = deliveryDate;
         this.specialPreComments = specialPreComments;
     }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getDishType() {
+        return dishType;
+    }
+
+    public String getChoclateType() {
+        return choclateType;
+    }
+
+    public String getDryFruits() {
+        return dryFruits;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public String getSpecialPreComments() {
+        return specialPreComments;
+    }
 }
