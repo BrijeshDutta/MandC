@@ -33,6 +33,7 @@
     <string name="place_order_label">Place Order</string>
     <string name="select_only_weekends">Select only weekends</string>
     <string name="choclate_type_label">Choclate Type</string>
+    <string name="welcome_label">Welcome</string>
     <string-array name="dryfruit_list">
         <item>Cashews</item>
         <item>Raisins</item>

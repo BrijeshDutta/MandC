@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity
         String getEmail = firebaseUser.getEmail();
         textViewUserName.setText(getEmail);
 
-        Toast.makeText(HomeActivity.this,getEmail,Toast.LENGTH_LONG).show();
+        Toast.makeText(HomeActivity.this,getString(R.string.welcome_label)+" " + getEmail,Toast.LENGTH_LONG).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
