@@ -112,26 +112,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/deliveryDate"
+                <Button
+                    android:id="@+id/btnDeliveryDate"
+                    style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:hint="@string/select_only_weekends"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_below="@+id/dish"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:text="We deliver only on Weekends !!"
+                    android:textStyle="bold"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    />
+                    android:layout_marginRight="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 

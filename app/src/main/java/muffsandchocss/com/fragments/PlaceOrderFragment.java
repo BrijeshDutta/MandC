@@ -2,9 +2,7 @@ package muffsandchocss.com.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,15 +14,10 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +34,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import muffsandchocss.com.mandc.R;
-import muffsandchocss.com.mandc.UpdateUserProfileActivity;
 
 public class PlaceOrderFragment extends Fragment {
 
@@ -63,8 +55,11 @@ public class PlaceOrderFragment extends Fragment {
     EditText editTextQuantity;
 
     //Delivery date picker
-    EditText editTextDeliveryDate;
+    Button buttonDeliveryDate;
     Calendar myCalendar;
+    String userSelectedDeliveryDate;
+
+    //
 
     //Special preparation Comments
 
@@ -111,6 +106,7 @@ public class PlaceOrderFragment extends Fragment {
         //quantity
         editTextQuantity = (EditText)fragmentView.findViewById(R.id.quantity);
 
+        //Delivery Date
         showDeliveryDatePicker(fragmentView);
 
         //Get Special preparation comments
@@ -137,7 +133,7 @@ public class PlaceOrderFragment extends Fragment {
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 int quantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
-                String deliveryDate = editTextDeliveryDate.getText().toString().trim();
+                String deliveryDate = userSelectedDeliveryDate;
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
 
@@ -183,54 +179,36 @@ public class PlaceOrderFragment extends Fragment {
 
     private void showDeliveryDatePicker(View fragmentView) {
 
-        editTextDeliveryDate = (EditText)fragmentView.findViewById(R.id.deliveryDate);
-        editTextDeliveryDate.setOnClickListener(new View.OnClickListener() {
-
+        buttonDeliveryDate = (Button) fragmentView.findViewById(R.id.btnDeliveryDate);
+        buttonDeliveryDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                datePicker();
+            public void onClick(View v){
+                // Use the current date as the default date in the picker
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                //R.style.DatePicker
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String deliveryDate = String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+
+                        Toast.makeText(getActivity(),deliveryDate,Toast.LENGTH_SHORT).show();
+
+                        ((Button) getActivity().findViewById(R.id.btnDeliveryDate)).setText(deliveryDate);
+                        userSelectedDeliveryDate = buttonDeliveryDate.getText().toString().trim();
+                    }
+                },year,month,day);
+
+                datePicker.show();
+
             }
         });
-        editTextDeliveryDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    datePicker();
-                }
-            }
-        });
+
+
     }
 
-    private void datePicker(){
-        // TODO Auto-generated method stub
-
-        myCalendar = Calendar.getInstance();
-
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                Calendar myCalendar = Calendar.getInstance();
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
-
-        };
-        new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Light_Dialog,date, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-    }
-    private void updateLabel() {
-
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        editTextDeliveryDate.setText(sdf.format(myCalendar.getTime()));
-    }
 
     private void showDishDropDown(View fragmentView) {
 
