@@ -86,28 +86,32 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
 
-                <EditText
-                    android:id="@+id/quantity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:hint="Quantity"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:layout_below="@+id/dish"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_below="@+id/TextView01">
+
+                <Button
+                    android:id="@+id/btnRemoveQuantity"
+                    android:layout_width="0.0dip" android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:text="Remove"
                     />
+                <Button
+                    android:id="@+id/btnQuantity"
+                    android:layout_width="0.0dip" android:layout_height="fill_parent"
+                    android:text="quantity"
+                    android:background="@android:color/transparent"
+                    android:layout_weight="1.0" />
 
-            </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:id="@+id/btnAddQuantity"
+                    android:layout_width="0.0dip" android:layout_height="fill_parent"
+                    android:text="Add"
+                    android:layout_weight="1.0" />
+
+            </LinearLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

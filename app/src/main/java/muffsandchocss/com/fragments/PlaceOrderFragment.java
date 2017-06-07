@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,7 +54,9 @@ public class PlaceOrderFragment extends Fragment {
     String sUserSlectedChoclateType;
 
     //Quantity
-    EditText editTextQuantity;
+    Button buttonQuantity,buttonAddQuantity,buttonRemoveQuantity;
+    int userSelectedQuantity = 0;
+
 
     //Delivery date picker
     Button buttonDeliveryDate;
@@ -104,7 +108,7 @@ public class PlaceOrderFragment extends Fragment {
         showDryFruitSelection(fragmentView);
 
         //quantity
-        editTextQuantity = (EditText)fragmentView.findViewById(R.id.quantity);
+        addRemoveQuantity(fragmentView);
 
         //Delivery Date
         showDeliveryDatePicker(fragmentView);
@@ -116,6 +120,37 @@ public class PlaceOrderFragment extends Fragment {
 
         placeOrderButton(fragmentView);
         return  fragmentView;
+
+    }
+
+    private void addRemoveQuantity(View fragmentView) {
+
+        buttonQuantity = (Button)fragmentView.findViewById(R.id.btnQuantity);
+        buttonAddQuantity = (Button)fragmentView.findViewById(R.id.btnAddQuantity);
+        buttonRemoveQuantity = (Button) fragmentView.findViewById(R.id.btnRemoveQuantity);
+        buttonAddQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userSelectedQuantity =userSelectedQuantity + 1;
+                buttonQuantity.setText(Integer.toString(userSelectedQuantity));
+            }
+        });
+        buttonRemoveQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userSelectedQuantity <=0){
+                    Toast.makeText(getActivity(),"Quantity cannot be less than 0",Toast.LENGTH_SHORT).show();
+                } else
+                {
+                    userSelectedQuantity =userSelectedQuantity - 1;
+                    buttonQuantity.setText(Integer.toString(userSelectedQuantity));
+                }
+
+            }
+        });
+
+
+
 
     }
 
@@ -132,7 +167,7 @@ public class PlaceOrderFragment extends Fragment {
                 String dishType = sUserSelectedDish;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
-                int quantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
+                int quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
                 String deliveryDate = userSelectedDeliveryDate;
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
