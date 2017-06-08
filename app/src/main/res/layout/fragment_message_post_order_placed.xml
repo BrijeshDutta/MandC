@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="muffsandchocss.com.fragments.PlaceOrderFragment">
 
-    <TextView
+    <EditText
         android:id="@+id/textViewOrderPlacedMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,6 +15,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="Order Summary"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
 
         android:textColor="@android:color/white"

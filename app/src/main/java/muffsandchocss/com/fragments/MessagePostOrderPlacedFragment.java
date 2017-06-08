@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import muffsandchocss.com.mandc.R;
 
 public class MessagePostOrderPlacedFragment extends Fragment {
 
-    TextView textViewOrderPlacedMessage;
+    EditText textViewOrderPlacedMessage;
     TextView textViewOrderType;
     TextView textViewOrderId;
     TextView textViewQuantity;
@@ -46,7 +47,7 @@ public class MessagePostOrderPlacedFragment extends Fragment {
 
 
 
-        textViewOrderPlacedMessage = (TextView) fragmentView.findViewById(R.id.textViewOrderPlacedMessage);
+        textViewOrderPlacedMessage = (EditText) fragmentView.findViewById(R.id.textViewOrderPlacedMessage);
         textViewOrderId = (TextView) fragmentView.findViewById(R.id.textViewOrderId);
         textViewOrderType = (TextView) fragmentView.findViewById(R.id.textViewOrderType);
         textViewQuantity = (TextView) fragmentView.findViewById(R.id.textViewOrderQuantity);
