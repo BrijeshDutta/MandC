@@ -21,8 +21,10 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import muffsandchocss.com.fragments.BaseFragment;
 import muffsandchocss.com.fragments.OrderSummaryFragment;
 import muffsandchocss.com.fragments.PlaceOrderFragment;
+import muffsandchocss.com.fragments.UserProfileFragment;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +35,10 @@ public class HomeActivity extends AppCompatActivity
     private TextView textViewUserEmailId;
 
     private Intent intentLoginActivity;
+
+    //Fragment declaration
+    Fragment fragment = null;
+    FragmentTransaction fragmentTransaction;
 
 
     @Override
@@ -71,7 +77,13 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        fragment = new BaseFragment();
+        if (fragment !=null){
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_frame,fragment);
+            fragmentTransaction.commit();
 
+        }
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -105,14 +117,21 @@ public class HomeActivity extends AppCompatActivity
     }
     private void displaySelectedScreen(int id){
 
-        Fragment fragment = null;
+
 
         switch (id){
+            case R.id.nav_home:
+                fragment = new BaseFragment();
+                break;
+
             case R.id.nav_place_order:
                 fragment = new PlaceOrderFragment();
                 break;
             case R.id.nav_order_summary:
                 fragment = new OrderSummaryFragment();
+                break;
+            case R.id.nav_profile:
+                fragment = new UserProfileFragment();
                 break;
             case  R.id.nav_logout:
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -126,7 +145,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         if (fragment !=null){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_frame,fragment);
             fragmentTransaction.commit();
 
