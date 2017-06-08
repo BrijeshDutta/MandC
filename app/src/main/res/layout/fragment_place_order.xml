@@ -167,7 +167,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1.0"
-                    android:background="#fafcbb"/>
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
