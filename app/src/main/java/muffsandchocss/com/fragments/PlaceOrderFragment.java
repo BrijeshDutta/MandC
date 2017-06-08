@@ -78,8 +78,8 @@ public class PlaceOrderFragment extends Fragment {
     String sSpecialPreComments;
 
     //
-    TextView textViewPrice;
-    TextView textViewOrderValue;
+    EditText textViewPrice;
+    EditText textViewOrderValue;
     //Place order Button
     Button buttonPlaceOrder;
 
@@ -119,7 +119,7 @@ public class PlaceOrderFragment extends Fragment {
         //Show Dry fruits selection
         showDryFruitSelection(fragmentView);
 
-        textViewOrderValue = (TextView) fragmentView.findViewById(R.id.txtViewOrderValue);
+        textViewOrderValue = (EditText) fragmentView.findViewById(R.id.txtViewOrderValue);
 
         //quantity
         addRemoveQuantity(fragmentView);
@@ -133,7 +133,7 @@ public class PlaceOrderFragment extends Fragment {
         editTextSpecialPreComments = (EditText) fragmentView.findViewById(R.id.specialInstructions);
 
         //display the price
-        textViewPrice = (TextView) fragmentView.findViewById(R.id.txtViewPrice);
+        textViewPrice = (EditText) fragmentView.findViewById(R.id.txtViewPrice);
         textViewPrice.setText("Price per piece Rs." + Integer.toString(price));
 
         placeOrderButton(fragmentView);
