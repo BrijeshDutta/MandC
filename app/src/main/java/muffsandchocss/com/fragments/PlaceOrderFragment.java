@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,7 +46,11 @@ public class PlaceOrderFragment extends Fragment {
     String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milky"};
 
 
-    MaterialBetterSpinner materialBetterSpinnerDishSelecter;
+    //
+    final String orderType = "CHOCLATE";
+    final int price = 12;
+    int iOrderValue =0;
+
     String sUserSelectedDish;
     //Dry fruit selection
     EditText editTextSelectDryFruits;
@@ -69,6 +75,10 @@ public class PlaceOrderFragment extends Fragment {
 
     EditText editTextSpecialPreComments;
     String sSpecialPreComments;
+
+    //
+    TextView textViewPrice;
+    TextView textViewOrderValue;
     //Place order Button
     Button buttonPlaceOrder;
 
@@ -101,14 +111,14 @@ public class PlaceOrderFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //Show dish drop down
-        showDishDropDown(fragmentView);
 
         //Show choclate type dropdown
         showChoclateDropDown(fragmentView);
 
         //Show Dry fruits selection
         showDryFruitSelection(fragmentView);
+
+        textViewOrderValue = (TextView) fragmentView.findViewById(R.id.txtViewOrderValue);
 
         //quantity
         addRemoveQuantity(fragmentView);
@@ -121,12 +131,17 @@ public class PlaceOrderFragment extends Fragment {
 
         editTextSpecialPreComments = (EditText) fragmentView.findViewById(R.id.specialInstructions);
 
+        //display the price
+        textViewPrice = (TextView) fragmentView.findViewById(R.id.txtViewPrice);
+        textViewPrice.setText("Price per piece Rs." + Integer.toString(price));
+
         placeOrderButton(fragmentView);
         return  fragmentView;
 
     }
 
     private void addRemoveQuantity(View fragmentView) {
+
 
         buttonQuantity = (Button)fragmentView.findViewById(R.id.btnQuantity);
         buttonAddQuantity = (Button)fragmentView.findViewById(R.id.btnAddQuantity);
@@ -135,6 +150,8 @@ public class PlaceOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 userSelectedQuantity =userSelectedQuantity + 1;
+                iOrderValue = userSelectedQuantity*price;
+                textViewOrderValue.setText("Rs."+ Integer.toString(iOrderValue));
                 buttonQuantity.setText(Integer.toString(userSelectedQuantity));
             }
         });
@@ -146,6 +163,9 @@ public class PlaceOrderFragment extends Fragment {
                 } else
                 {
                     userSelectedQuantity =userSelectedQuantity - 1;
+                    iOrderValue = userSelectedQuantity*price;
+                    textViewOrderValue.setText("Rs."+ Integer.toString(iOrderValue));
+
                     buttonQuantity.setText(Integer.toString(userSelectedQuantity));
                 }
 
@@ -167,7 +187,7 @@ public class PlaceOrderFragment extends Fragment {
         buttonPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String dishType = sUserSelectedDish;
+                final String dishType = orderType;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 int quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
@@ -181,13 +201,13 @@ public class PlaceOrderFragment extends Fragment {
                 //Database initialization
                 databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
                 orderId = databaseReference.push().getKey();
-                orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
+                orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments,iOrderValue);
 
                 //Alert Dailog box
                 final AlertDialog.Builder alertDialogConfirmOrder = new AlertDialog.Builder(getActivity());
 
                 alertDialogConfirmOrder.setTitle("Confirmation");
-                alertDialogConfirmOrder.setMessage("Are you sure you want to place order?");
+                alertDialogConfirmOrder.setMessage("Are you sure you want to place order?. Order Value : " + iOrderValue);
 
                 alertDialogConfirmOrder.setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
 
@@ -282,31 +302,6 @@ public class PlaceOrderFragment extends Fragment {
         });
 
 
-    }
-
-
-    private void showDishDropDown(View fragmentView) {
-
-        //Drop down to select type of dish
-        materialBetterSpinnerDishSelecter = (MaterialBetterSpinner)fragmentView.findViewById(R.id.dish);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, SPINNER_LIST_DISH);
-        materialBetterSpinnerDishSelecter.setAdapter(adapter);
-        materialBetterSpinnerDishSelecter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                sUserSelectedDish = materialBetterSpinnerDishSelecter.getText().toString().trim();
-            }
-        });
     }
 
     private void showChoclateDropDown(View fragmentView) {

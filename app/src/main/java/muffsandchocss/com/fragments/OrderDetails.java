@@ -13,11 +13,12 @@ public class OrderDetails {
     public int quantity;
     public String deliveryDate;
     public String specialPreComments;
+    public int orderValue;
     public OrderDetails() {
 
     }
 
-    public OrderDetails(String orderId,String dishType, String choclateType, String dryFruits, int quantity, String deliveryDate,String specialPreComments) {
+    public OrderDetails(String orderId,String dishType, String choclateType, String dryFruits, int quantity, String deliveryDate,String specialPreComments,int orderValue) {
         this.orderId = orderId;
         this.dishType = dishType;
         this.choclateType = choclateType;
@@ -25,6 +26,7 @@ public class OrderDetails {
         this.quantity = quantity;
         this.deliveryDate = deliveryDate;
         this.specialPreComments = specialPreComments;
+        this.orderValue = orderValue;
     }
 
     public String getOrderId() {
