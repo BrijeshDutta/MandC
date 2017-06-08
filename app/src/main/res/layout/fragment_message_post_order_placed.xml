@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="150dp"
+android:background="#f52642"
+android:orientation="vertical" >
+
+<TextView
+    android:id="@+id/textViewOrderPlacedMessage"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:layout_marginTop="10dp"
+    android:layout_weight="0.20"
+    android:textColor="@android:color/white"
+    android:textSize="15dp"
+    android:textStyle="bold"
+    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+    android:text="Order Summary"/>
+    <TextView
+        android:id="@+id/textViewDishType"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.20"
+        android:textColor="@android:color/white"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+<LinearLayout
+    android:id="@+id/layButton"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="5dp"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/btnAddOrder"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:background="#ffffff"
+        android:text="Add Order" />
+
+    <Button
+        android:id="@+id/btnRemoveOrder"
+        android:layout_width="0.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="1.0"
+        android:background="#ffffff"
+        android:text="Remove Order" />
+</LinearLayout>
+
+</LinearLayout>

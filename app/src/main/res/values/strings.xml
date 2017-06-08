@@ -34,6 +34,7 @@
     <string name="select_only_weekends">Select only weekends</string>
     <string name="choclate_type_label">Choclate Type</string>
     <string name="welcome_label">Welcome</string>
+    <string name="order_details_firebase_database">OrderDetails</string>
     <string-array name="dryfruit_list">
         <item>Cashews</item>
         <item>Raisins</item>

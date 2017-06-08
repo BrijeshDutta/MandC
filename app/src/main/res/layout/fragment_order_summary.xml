@@ -6,21 +6,29 @@
     tools:context="muffsandchocss.com.fragments.OrderSummaryFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Order Summary" />
-
-    <ListView
-        android:id="@+id/listViewOrderDetails"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp" />
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnViewOrderSummary"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Order Summary" />
+
+        <ListView
+            android:id="@+id/listViewOrderDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp" />
+    </LinearLayout>
+
 
 </RelativeLayout>

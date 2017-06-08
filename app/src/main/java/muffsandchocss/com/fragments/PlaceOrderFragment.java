@@ -164,7 +164,7 @@ public class PlaceOrderFragment extends Fragment {
         buttonPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dishType = sUserSelectedDish;
+                final String dishType = sUserSelectedDish;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 int quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
@@ -176,22 +176,26 @@ public class PlaceOrderFragment extends Fragment {
                 //Getting firebase user details
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 //Database initialization
-                databaseReference = FirebaseDatabase.getInstance().getReference("UserUniqueId"+firebaseUser.getUid());
+                databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
                 String orderId = databaseReference.push().getKey();
                 OrderDetails orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
                 //Progress dailog
                 progressDialogPlaceOrder.setMessage("Placing Order...");
                 progressDialogPlaceOrder.show();
-                databaseReference.child("OrderDetails"+orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
 
                             Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
                             progressDialogPlaceOrder.dismiss();
-                            //Summary Fragment display
-                            Fragment fragment = new OrderSummaryFragment();
+//                            //Summary Fragment display
+                              //Giving Issues
+                            Fragment fragment = new MessagePostOrderPlacedFragment();
+                            Bundle bundleArguments = new Bundle();
+                            bundleArguments.putString("dishType",dishType);
+                            fragment.setArguments(bundleArguments);
 
                             if (fragment !=null){
                                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
