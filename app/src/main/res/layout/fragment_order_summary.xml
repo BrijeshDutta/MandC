@@ -31,7 +31,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginRight="5dp"
+            android:layout_margin="10dp"
+            />
     </LinearLayout>
 
 

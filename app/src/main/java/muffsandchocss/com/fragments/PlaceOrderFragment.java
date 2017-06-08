@@ -79,6 +79,9 @@ public class PlaceOrderFragment extends Fragment {
     //FireBase
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    String orderId;
+    OrderDetails orderDetails;
 
     //Progress dailog for placiing order
     ProgressDialog progressDialogPlaceOrder;
@@ -174,42 +177,75 @@ public class PlaceOrderFragment extends Fragment {
 
 
                 //Getting firebase user details
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                firebaseUser = firebaseAuth.getCurrentUser();
                 //Database initialization
                 databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
-                String orderId = databaseReference.push().getKey();
-                OrderDetails orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
+                orderId = databaseReference.push().getKey();
+                orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments);
 
-                //Progress dailog
-                progressDialogPlaceOrder.setMessage("Placing Order...");
-                progressDialogPlaceOrder.show();
-                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).child(orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
+                //Alert Dailog box
+                final AlertDialog.Builder alertDialogConfirmOrder = new AlertDialog.Builder(getActivity());
 
-                            Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
-                            progressDialogPlaceOrder.dismiss();
+                alertDialogConfirmOrder.setTitle("Confirmation");
+                alertDialogConfirmOrder.setMessage("Are you sure you want to place order?");
+
+                alertDialogConfirmOrder.setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Progress dailog
+                                progressDialogPlaceOrder.setMessage("Placing Order...");
+                                progressDialogPlaceOrder.show();
+
+
+                                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).child(orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+
+                                            Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
+                                            progressDialogPlaceOrder.dismiss();
 //                            //Summary Fragment display
-                              //Giving Issues
-                            Fragment fragment = new MessagePostOrderPlacedFragment();
-                            Bundle bundleArguments = new Bundle();
-                            bundleArguments.putString("dishType",dishType);
-                            fragment.setArguments(bundleArguments);
+                                            //Giving Issues
+                                            Fragment fragment = new MessagePostOrderPlacedFragment();
+                                            Bundle bundleArguments = new Bundle();
+                                            bundleArguments.putString("dishType",dishType);
+                                            fragment.setArguments(bundleArguments);
 
-                            if (fragment !=null){
-                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.content_frame,fragment);
-                                fragmentTransaction.commit();
+                                            if (fragment !=null){
+                                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                                fragmentTransaction.replace(R.id.content_frame,fragment);
+                                                fragmentTransaction.commit();
+
+                                            }
+
+
+                                        }else {
+                                            Toast.makeText(getActivity(),"Failed to place order " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                });
+
+
+                                //Toast.makeText(getActivity(),"Inside Yes",Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
 
                             }
+                        });
+                alertDialogConfirmOrder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                        }else {
-                            Toast.makeText(getActivity(),"Failed to place order " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                        }
+                        // Do nothing
+                        Toast.makeText(getActivity(),"Inside NO",Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
+
+                AlertDialog alert = alertDialogConfirmOrder.create();
+                alert.show();
+
 
                 //Toast.makeText(getActivity(),"Place Order",Toast.LENGTH_LONG).show();
             }
