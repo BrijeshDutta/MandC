@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -18,7 +19,10 @@ import muffsandchocss.com.mandc.R;
 public class MessagePostOrderPlacedFragment extends Fragment {
 
     TextView textViewOrderPlacedMessage;
-    TextView textViewDishType;
+    TextView textViewOrderType;
+    TextView textViewOrderId;
+    TextView textViewQuantity;
+    TextView textViewOrderValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,9 +32,24 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_message_post_order_placed, container, false);
 
         String dishType = getArguments().getString("dishType");
+        String sOrderId = getArguments().getString("orderId");
+        String sOrderQuantity = getArguments().getString("orderQuantity");
+        String sOrderValue = getArguments().getString("orderValue");
+
+
+
         textViewOrderPlacedMessage = (TextView) fragmentView.findViewById(R.id.textViewOrderPlacedMessage);
-        textViewDishType = (TextView) fragmentView.findViewById(R.id.textViewDishType);
-        textViewDishType.setText("Dish Type : " + dishType);
+        textViewOrderId = (TextView) fragmentView.findViewById(R.id.textViewOrderId);
+        textViewOrderType = (TextView) fragmentView.findViewById(R.id.textViewOrderType);
+        textViewQuantity = (TextView) fragmentView.findViewById(R.id.textViewOrderQuantity);
+        textViewOrderValue = (TextView) fragmentView.findViewById(R.id.textViewOrderValue);
+//
+        textViewOrderId.setText("Order Id : " + sOrderId);
+        textViewOrderType.setText("Order Type : " + dishType);
+        textViewQuantity.setText("Order quantity : " +sOrderQuantity);
+        Toast.makeText(getActivity(),sOrderValue,Toast.LENGTH_SHORT).show();
+        textViewOrderValue.setText("Order Value : " + sOrderValue);
+
         //textViewOrderPlacedMessage.setText("OrderPlaced Successfully" + dishType);
         return fragmentView;
     }

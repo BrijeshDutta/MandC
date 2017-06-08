@@ -1,57 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="150dp"
-android:background="#f52642"
-android:orientation="vertical" >
-
-<TextView
-    android:id="@+id/textViewOrderPlacedMessage"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:layout_marginTop="10dp"
-    android:layout_weight="0.20"
-    android:textColor="@android:color/white"
-    android:textSize="15dp"
-    android:textStyle="bold"
-    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-    android:text="Order Summary"
-    />
+    android:layout_height="match_parent"
+    tools:context="muffsandchocss.com.fragments.PlaceOrderFragment">
+
     <TextView
-        android:id="@+id/textViewDishType"
+        android:id="@+id/textViewOrderPlacedMessage"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0.20"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Order Summary"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+
         android:textColor="@android:color/white"
-        android:textSize="15dp"
-        android:textStyle="bold"
         />
 
-<LinearLayout
-    android:id="@+id/layButton"
-    android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="5dp"
-    android:gravity="center"
-    android:orientation="horizontal" >
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:id="@+id/PlaceOder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnAddOrder"
-        android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:background="#fafcbb"
-        android:text="Add Order" />
+        <LinearLayout
+            android:id="@+id/ll_PlaceOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
-    <Button
-        android:id="@+id/btnRemoveOrder"
-        android:layout_width="0.0dip"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1.0"
-        android:background="#fafcbb"
-        android:text="Remove Order" />
-</LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewOrderId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Order Id"
+
+                    android:textColor="@android:color/white"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewOrderType"
+                    android:text="Order Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_below="@+id/dish"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@android:color/white"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewOrderQuantity"
+                    android:text="Order Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_below="@+id/dish"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@android:color/white"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewOrderValue"
+                    android:text="Order Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_below="@+id/dish"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="@android:color/white"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+
+                android:layout_width="fill_parent" android:layout_height="wrap_content"
+                android:layout_below="@+id/TextView01">
+
+                <Button
+                    android:id="@+id/btnRemoveQuantity"
+                    android:layout_width="0.0dip" android:layout_height="fill_parent"
+                    android:layout_weight="1.0"
+                    android:text="Remove"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    />
+
+                <Button
+                    android:id="@+id/btnAddQuantity"
+                    android:layout_width="0.0dip" android:layout_height="fill_parent"
+                    android:text="Add"
+                    android:layout_weight="1.0"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

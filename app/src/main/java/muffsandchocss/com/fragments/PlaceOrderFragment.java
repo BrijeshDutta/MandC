@@ -62,6 +62,7 @@ public class PlaceOrderFragment extends Fragment {
     //Quantity
     Button buttonQuantity,buttonAddQuantity,buttonRemoveQuantity;
     int userSelectedQuantity = 0;
+    int quantity;
 
 
     //Delivery date picker
@@ -151,7 +152,7 @@ public class PlaceOrderFragment extends Fragment {
             public void onClick(View v) {
                 userSelectedQuantity =userSelectedQuantity + 1;
                 iOrderValue = userSelectedQuantity*price;
-                textViewOrderValue.setText("Rs."+ Integer.toString(iOrderValue));
+                textViewOrderValue.setText("Order Value Rs."+ Integer.toString(iOrderValue));
                 buttonQuantity.setText(Integer.toString(userSelectedQuantity));
             }
         });
@@ -164,7 +165,7 @@ public class PlaceOrderFragment extends Fragment {
                 {
                     userSelectedQuantity =userSelectedQuantity - 1;
                     iOrderValue = userSelectedQuantity*price;
-                    textViewOrderValue.setText("Rs."+ Integer.toString(iOrderValue));
+                    textViewOrderValue.setText("Order Value Rs."+ Integer.toString(iOrderValue));
 
                     buttonQuantity.setText(Integer.toString(userSelectedQuantity));
                 }
@@ -190,7 +191,7 @@ public class PlaceOrderFragment extends Fragment {
                 final String dishType = orderType;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
-                int quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
+                quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
                 String deliveryDate = userSelectedDeliveryDate;
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
@@ -230,6 +231,9 @@ public class PlaceOrderFragment extends Fragment {
                                             Fragment fragment = new MessagePostOrderPlacedFragment();
                                             Bundle bundleArguments = new Bundle();
                                             bundleArguments.putString("dishType",dishType);
+                                            bundleArguments.putString("orderId",orderId);
+                                            bundleArguments.putString("orderQuantity",Integer.toString(quantity));
+                                            bundleArguments.putString("orderValue",Integer.toString(iOrderValue));
                                             fragment.setArguments(bundleArguments);
 
                                             if (fragment !=null){

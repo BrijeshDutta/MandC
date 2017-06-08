@@ -148,7 +148,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:text="Rs."
+                android:text="Order Value Rs."
                 android:layout_margin="10dp"/>
 
             <LinearLayout
