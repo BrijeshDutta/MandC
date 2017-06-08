@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,12 @@ public class MessagePostOrderPlacedFragment extends Fragment {
     TextView textViewOrderId;
     TextView textViewQuantity;
     TextView textViewOrderValue;
+
+    Button buttonAddOrder;
+    Button buttonDeleteOrder;
+
+    Fragment fragment;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +51,26 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         textViewOrderType = (TextView) fragmentView.findViewById(R.id.textViewOrderType);
         textViewQuantity = (TextView) fragmentView.findViewById(R.id.textViewOrderQuantity);
         textViewOrderValue = (TextView) fragmentView.findViewById(R.id.textViewOrderValue);
+
+        buttonAddOrder = (Button) fragmentView.findViewById(R.id.btnAddOrder);
+        buttonAddOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment = new PlaceOrderFragment();
+                if (fragment != null){
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame,fragment);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
+        buttonDeleteOrder = (Button) fragmentView.findViewById(R.id.btnRemoveOrder);
+        buttonDeleteOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Delete functionality Not implemented yet",Toast.LENGTH_SHORT).show();
+            }
+        });
 //
         textViewOrderId.setText("Order Id : " + sOrderId);
         textViewOrderType.setText("Order Type : " + dishType);

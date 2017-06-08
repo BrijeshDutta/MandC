@@ -134,18 +134,18 @@
                 android:layout_below="@+id/TextView01">
 
                 <Button
-                    android:id="@+id/btnRemoveQuantity"
+                    android:id="@+id/btnRemoveOrder"
                     android:layout_width="0.0dip" android:layout_height="fill_parent"
                     android:layout_weight="1.0"
-                    android:text="Remove"
+                    android:text="Remove Order"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     />
 
                 <Button
-                    android:id="@+id/btnAddQuantity"
+                    android:id="@+id/btnAddOrder"
                     android:layout_width="0.0dip" android:layout_height="fill_parent"
-                    android:text="Add"
+                    android:text="Add Order"
                     android:layout_weight="1.0"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
