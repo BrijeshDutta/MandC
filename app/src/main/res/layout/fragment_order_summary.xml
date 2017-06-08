@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="View Order Summary"
             android:layout_weight="1.0"
-            android:background="#fafcbb"/>
+            />
 
         <ListView
             android:id="@+id/listViewOrderDetails"

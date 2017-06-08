@@ -34,11 +34,13 @@ public class OrderDetailsList extends ArrayAdapter<OrderDetails> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View listViewItem = layoutInflater.inflate(R.layout.list_oder_summary,null,true);
+        TextView textViewHeader = (TextView) listViewItem.findViewById(R.id.textViewHeader);
         TextView textViewOrderDetails = (TextView) listViewItem.findViewById(R.id.textViewOrderDetails);
 
 
         OrderDetails orderDetails = orderDetailsList.get(position);
-        textViewOrderDetails.setText("Order Summary : "+(orderDetails.dishType)+"|" + (orderDetails.choclateType) + "|" + (orderDetails.quantity)+"| Price");
+        textViewHeader.setText("Order Id");
+        textViewOrderDetails.setText(orderDetails.getOrderId());
 
 
         return listViewItem;
