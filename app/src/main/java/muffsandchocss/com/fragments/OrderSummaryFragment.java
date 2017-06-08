@@ -102,15 +102,15 @@ public class OrderSummaryFragment extends Fragment {
         firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             OrderDetails orderDetails;
 
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.hasChild("UserUniqueId"+firebaseUser.getUid())){
+                if (dataSnapshot.child("UserUniqueId"+firebaseUser.getUid()).hasChildren()){
                     orderDetailsList.clear();
 
-                    for (DataSnapshot  orderDetailSnapshot : dataSnapshot.getChildren()){
+                    for (DataSnapshot  orderDetailSnapshot : dataSnapshot.child("UserUniqueId"+firebaseUser.getUid()).getChildren()){
                         orderDetails = orderDetailSnapshot.getValue(OrderDetails.class);
                         orderDetailsList.add(orderDetails);
                     }

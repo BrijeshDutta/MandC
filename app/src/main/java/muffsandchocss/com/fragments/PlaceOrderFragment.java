@@ -183,7 +183,7 @@ public class PlaceOrderFragment extends Fragment {
                 //Progress dailog
                 progressDialogPlaceOrder.setMessage("Placing Order...");
                 progressDialogPlaceOrder.show();
-                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).child(orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
