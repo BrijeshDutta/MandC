@@ -20,7 +20,7 @@
             android:layout_height="200dp"
             android:text="Order Choclates. Rs 12/- per piece"
             android:layout_weight="1.0"
-            android:background="#fafcbb"
+            android:background="@android:color/white"
             />
 
         <Button
@@ -32,7 +32,7 @@
             android:layout_height="200dp"
             android:text="Order Muffins Rs 20/- per piece"
             android:layout_weight="1.0"
-            android:background="#fafcbb"/>
+            android:background="@android:color/white"/>
 
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_height="200dp"
             android:text="Order Subway Rs 100/- per piece"
             android:layout_weight="1.0"
-            android:background="#fafcbb"/>
+            android:background="@android:color/white"/>
 
 
         <Button
@@ -56,7 +56,7 @@
             android:layout_height="200dp"
             android:text="Order Sanwiches Rs 100/- per piece"
             android:layout_weight="1.0"
-            android:background="#fafcbb"/>
+            android:background="@android:color/white"/>
 
         <Button
             android:id="@+id/btnBengaliFood"
@@ -67,7 +67,7 @@
             android:layout_height="200dp"
             android:text="Order Bengali food Rs 100/- per piece"
             android:layout_weight="1.0"
-            android:background="#fafcbb"/>
+            android:background="@android:color/white"/>
     </LinearLayout>
 
 
