@@ -63,24 +63,31 @@
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnSignIn"
-                style="?android:textAppearanceSmall"
+            <LinearLayout
+                android:id="@+id/layButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Login"
-                android:textStyle="bold" />
+                android:layout_height="80dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btnSignUp"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="16.53"
-                android:text="Sign Up"
-                android:textStyle="bold"/>
+                <Button
+                    android:id="@+id/btnSignIn"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:background="#fafcbb"
+                    android:text="Login" />
+
+                <Button
+                    android:id="@+id/btnSignUp"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1.0"
+                    android:background="#fafcbb"
+                    android:text="Sign Up" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

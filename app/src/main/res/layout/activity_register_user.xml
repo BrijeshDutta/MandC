@@ -89,7 +89,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Sign Up"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="1.0"
+                android:background="#fafcbb"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
 
         </LinearLayout>
     </ScrollView>

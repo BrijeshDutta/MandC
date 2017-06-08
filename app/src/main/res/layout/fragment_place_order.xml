@@ -27,11 +27,12 @@
 
                 <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                     android:id="@+id/dish"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
 
@@ -155,28 +156,37 @@
                     />
 
             </android.support.design.widget.TextInputLayout>
-            <Button
-                android:id="@+id/btnPlaceOrder"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Place Order"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"/>
 
-            <Button
-                android:id="@+id/btnResetOrderDetails"
-                style="?android:textAppearanceSmall"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Reset Order"
-                android:textStyle="bold"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                />
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnResetOrderDetails"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Reset Order"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1.0"
+                    android:background="#fafcbb"
+                    />
+                <Button
+                    android:id="@+id/btnPlaceOrder"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Place Order"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1.0"
+                    android:background="#fafcbb"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
