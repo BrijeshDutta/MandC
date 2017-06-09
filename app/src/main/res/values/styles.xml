@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">#fbfbfc</item>
-        <item name="colorPrimaryDark">#e4e0df</item>
+        <item name="colorPrimaryDark">#1c024b</item>
         <item name="colorAccent">#B39DDB</item>
         <item name="actionMenuTextColor">@android:color/black</item>
         <item name="android:actionMenuTextColor">@android:color/black</item>
