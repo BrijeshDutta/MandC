@@ -3,24 +3,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:background">@android:color/holo_red_dark</item>
+
         <item name="colorPrimary">#fbfbfc</item>
-        <item name="colorPrimaryDark">#e2dad8</item>
-        <item name="colorAccent">#f5f8f9</item>
-        <item name="actionMenuTextColor">@android:color/white</item>
-        <item name="android:actionMenuTextColor">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
+        <item name="colorPrimaryDark">#e4e0df</item>
+        <item name="colorAccent">#B39DDB</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+        <item name="android:actionMenuTextColor">@android:color/black</item>
+        <item name="android:textColorHint">@android:color/black</item>
     </style>
 
-    //Trial
-    <!---->
-    <!--<style name="DatePicker" parent="@android:style/Widget.Material.Light.DatePicker">-->
-        <!--<item name="colorAccent">@android:color/holo_red_dark</item>-->
-        <!--<item name="android:layout_width">400dp</item>-->
-        <!--<item name="android:layout_height">400dp</item>-->
-        <!--<item name="android:datePickerMode">calendar</item>-->
-        <!--<item name="android:minDate">01/01/2000</item>-->
-    <!--</style>-->
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#B39DDB</item>
+
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

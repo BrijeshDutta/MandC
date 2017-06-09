@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EDE7F6"
     tools:context="muffsandchocss.com.fragments.PlaceOrderFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -82,7 +83,7 @@
                     android:id="@+id/btnQuantity"
                     android:layout_width="0.0dip" android:layout_height="fill_parent"
                     android:text="quantity"
-                    android:background="@android:color/transparent"
+                    android:background="#B39DDB"
                     android:layout_weight="1.0" />
 
                 <Button
