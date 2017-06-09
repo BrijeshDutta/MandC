@@ -3,6 +3,7 @@ package muffsandchocss.com.fragments;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import muffsandchocss.com.mandc.R;
@@ -292,11 +294,36 @@ public class PlaceOrderFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String deliveryDate = String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                        Calendar choosenDate = Calendar.getInstance();
+                        choosenDate.set(year,month,dayOfMonth);
+                        if (choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY  || choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
 
-                        Toast.makeText(getActivity(),deliveryDate,Toast.LENGTH_SHORT).show();
+                            //buttonDeliveryDate.setTextColor(Color.parseColor("#B39DDB"));
+                            Toast.makeText(getActivity(),"Yo !! we deliver only on weekends.." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a"),Toast.LENGTH_LONG).show();
 
-                        ((Button) getActivity().findViewById(R.id.btnDeliveryDate)).setText(deliveryDate);
-                        userSelectedDeliveryDate = buttonDeliveryDate.getText().toString().trim();
+                            ((Button) getActivity().findViewById(R.id.btnDeliveryDate)).setText(deliveryDate);
+                            userSelectedDeliveryDate = buttonDeliveryDate.getText().toString().trim();
+
+                        }
+                        else if (choosenDate.before(c)){
+
+
+                            buttonDeliveryDate.setText("DATE IN PAST");
+                            buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
+                            Toast.makeText(getActivity(),"Oh no !! time never comes back !!" ,Toast.LENGTH_SHORT).show();
+                            return;
+
+                        }
+                        else {
+
+                            buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
+                            Toast.makeText(getActivity(),"Hey !! its not a weekend !!! we hate serving on weekdays they are so boring uhh " +
+                                    ("\ud83d\ude0c"),Toast.LENGTH_LONG).show();
+                            return;
+
+                        }
+
                     }
                 },year,month,day);
 
