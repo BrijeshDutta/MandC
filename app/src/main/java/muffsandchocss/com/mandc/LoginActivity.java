@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (firebaseAuth.getCurrentUser() !=null){
 
             startActivity(intentHomeActivity);
+            finish();
         }
 
 
@@ -143,8 +144,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"Logged In Successfully",Toast.LENGTH_LONG).show();
-                    finish();
+
                     startActivity(intentHomeActivity);
+                    finish();
 
                 } else {
                     Toast.makeText(LoginActivity.this,"Error while login " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
