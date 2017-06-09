@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -76,10 +77,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //Firebase Object
     private FirebaseAuth firebaseAuth;
 
+    ProgressDialog progressDialogPlaceOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressDialogPlaceOrder = new ProgressDialog(LoginActivity.this);
         intentHomeActivity = new Intent(this,HomeActivity.class);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() !=null){
@@ -111,8 +114,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         buttonSignIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                userLogin();
-                //attemptLogin();
+
+                if(attemptLogin()){
+
+                }else if (attemptLoginPasswordValidation()){
+
+                }
+                else
+                {
+                    userLogin();
+                }
             }
         });
 
@@ -121,9 +132,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         btnSignUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                startActivity(intentRegisterUser);
 
+                startActivity(intentRegisterUser);
+                finish();
             }
         });
 
@@ -137,19 +148,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String password = mPasswordView.getText().toString().trim();
 
 
-
+        progressDialogPlaceOrder.setMessage("Signing In...");
+        progressDialogPlaceOrder.show();
         firebaseAuth.signInWithEmailAndPassword(email,password)
         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(LoginActivity.this,"Logged In Successfully",Toast.LENGTH_LONG).show();
-
+                    progressDialogPlaceOrder.dismiss();
                     startActivity(intentHomeActivity);
                     finish();
 
                 } else {
-                    Toast.makeText(LoginActivity.this,"Error while login " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                    progressDialogPlaceOrder.dismiss();
+                    Toast.makeText(LoginActivity.this,"Invalid login credentials.Please verify emailId/Password",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -205,10 +218,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+    private boolean attemptLogin() {
+
 
         // Reset errors.
         mEmailView.setError(null);
@@ -243,13 +254,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
         }
+        return cancel;
+    }
+    private boolean attemptLoginPasswordValidation() {
+
+
+        // Reset errors.
+
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String password = mPasswordView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
+        return cancel;
     }
 
     private boolean isEmailValid(String email) {
