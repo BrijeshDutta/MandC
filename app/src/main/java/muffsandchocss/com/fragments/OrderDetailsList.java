@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,11 +33,22 @@ public class OrderDetailsList extends ArrayAdapter<OrderDetails> {
     }
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
-        View listViewItem = layoutInflater.inflate(R.layout.list_oder_summary,null,true);
-        TextView textViewHeader = (TextView) listViewItem.findViewById(R.id.textViewHeader);
-        TextView textViewOrderDetails = (TextView) listViewItem.findViewById(R.id.textViewOrderDetails);
+        final View listViewItem = layoutInflater.inflate(R.layout.list_oder_summary,null,true);
+        final TextView textViewHeader = (TextView) listViewItem.findViewById(R.id.textViewHeader);
+        final TextView textViewOrderDetails = (TextView) listViewItem.findViewById(R.id.textViewOrderDetails);
+        Button buttonViewOrder = (Button) listViewItem.findViewById(R.id.btnViewOrder);
+        buttonViewOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(),"Coming soon functionality",Toast.LENGTH_LONG).show();
+//
+//                OrderDetails orderDetails = orderDetailsList.get(position);
+//                Toast.makeText(getContext(),"View Button click" + orderDetails.getOrderId(),Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         OrderDetails orderDetails = orderDetailsList.get(position);
