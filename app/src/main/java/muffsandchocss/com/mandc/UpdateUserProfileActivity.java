@@ -82,8 +82,17 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
         buttonUpdateProfile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveUserInformation();
-                startActivity(intentHomeActivity);
+                if (validatedAddress()){
+
+                }
+                else if (validatedMobileNo()){
+
+                }
+                else {
+                    saveUserInformation();
+                    startActivity(intentHomeActivity);
+
+                }
             }
         });
 
@@ -113,5 +122,58 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
 
     }
 
+    private boolean validatedAddress() {
+
+
+        // Reset errors.
+        editTextAddress.setError(null);
+
+        // Store values at the time of the login attempt.
+        String userAddress = editTextAddress.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(userAddress)) {
+            editTextAddress.setError(getString(R.string.error_field_required));
+            focusView = editTextAddress;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
+        return cancel;
+    }
+
+    private boolean validatedMobileNo() {
+
+
+        // Reset errors.
+        editTextMobileNo.setError(null);
+
+        // Store values at the time of the login attempt.
+        String userMobileNo = editTextMobileNo.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(userMobileNo)) {
+            editTextMobileNo.setError(getString(R.string.error_field_required));
+            focusView = editTextMobileNo;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
+        return cancel;
+    }
 }
 
