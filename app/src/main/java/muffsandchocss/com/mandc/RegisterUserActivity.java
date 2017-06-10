@@ -104,7 +104,19 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
         buttonSignUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                userSignUp();
+                if(attemptLoginValidateEmailId()){
+
+                }
+                else if (attemptLoginValidatePassword()) {
+
+                }
+                else if(validatePasswordAndConfirmPassword()){
+
+                }
+                else {
+                    userSignUp();
+                }
+
 
             }
         });
@@ -125,6 +137,7 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
                 if (task.isSuccessful()){
                     Toast.makeText(RegisterUserActivity.this,"Registered Successfully ",Toast.LENGTH_LONG).show();
                     startActivity(intentUpdateUserProfile);
+                    finish();
                 } else {
                     Toast.makeText(RegisterUserActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
@@ -182,10 +195,8 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+    private boolean attemptLoginValidateEmailId() {
+
 
         // Reset errors.
         mEmailView.setError(null);
@@ -221,13 +232,79 @@ public class RegisterUserActivity extends AppCompatActivity implements LoaderCal
             // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
         }
+        return cancel;
     }
+
+    private boolean attemptLoginValidatePassword() {
+
+
+        // Reset errors.
+        editTextPassword.setError(null);
+
+        // Store values at the time of the login attempt.
+        String password = editTextPassword.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(password)) {
+            editTextPassword.setError(getString(R.string.error_field_required));
+            focusView = editTextPassword;
+            cancel = true;
+        } else if (!isPasswordValid(password)) {
+            editTextPassword.setError(getString(R.string.error_invalid_password));
+            focusView = editTextPassword;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+        }
+        return cancel;
+    }
+
+
+    private boolean validatePasswordAndConfirmPassword() {
+
+
+        // Reset errors.
+        mEmailView.setError(null);
+        editTextPassword.setError(null);
+
+        // Store values at the time of the login attempt.
+
+        String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check passsword and confirm password are same
+        if (password.equalsIgnoreCase(confirmPassword)) {
+
+        }else {
+            editTextPassword.setError(getString(R.string.error_password_confirm_password_mismatch));
+            focusView = editTextPassword;
+            cancel = true;
+
+        }
+
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+        }
+        return cancel;
+    }
+
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
