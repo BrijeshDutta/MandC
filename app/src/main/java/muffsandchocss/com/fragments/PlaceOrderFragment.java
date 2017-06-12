@@ -468,12 +468,13 @@ public class PlaceOrderFragment extends Fragment {
                 editTextSelectDryFruits.setText(item);
             }
         });
-        alertDialog.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+//
+//        alertDialog.setNegativeButton(R.string.dismiss_label, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
         alertDialog.setNeutralButton(R.string.clearall_label, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
