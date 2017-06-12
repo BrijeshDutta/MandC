@@ -59,7 +59,7 @@ public class PlaceOrderFragment extends Fragment {
 
     //Choclate type
     MaterialBetterSpinner spinnerChoclatePicker;
-    String sUserSlectedChoclateType;
+    String sUserSlectedChoclateType = "No choclates selected";
 
     //Quantity
     Button buttonQuantity,buttonAddQuantity,buttonRemoveQuantity;
@@ -70,7 +70,11 @@ public class PlaceOrderFragment extends Fragment {
     //Delivery date picker
     Button buttonDeliveryDate;
     Calendar myCalendar;
-    String userSelectedDeliveryDate;
+    Calendar c;
+    String userSelectedDeliveryDate = "No delivery date";
+    int iUserSelectedYear,iUserSelectedMonth,iUserSelectedDayOfMonth;
+    String deliveryDate;
+
 
     //
 
@@ -152,6 +156,7 @@ public class PlaceOrderFragment extends Fragment {
         buttonAddQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonQuantity.setError(null);
                 userSelectedQuantity =userSelectedQuantity + 1;
                 iOrderValue = userSelectedQuantity*price;
                 textViewOrderValue.setText("Order Value Rs."+ Integer.toString(iOrderValue));
@@ -161,7 +166,9 @@ public class PlaceOrderFragment extends Fragment {
         buttonRemoveQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonQuantity.setError(null);
                 if (userSelectedQuantity <=0){
+                    buttonQuantity.setError("Quantity cannot be less than 0");
                     Toast.makeText(getActivity(),"Quantity cannot be less than 0",Toast.LENGTH_SHORT).show();
                 } else
                 {
@@ -175,9 +182,6 @@ public class PlaceOrderFragment extends Fragment {
             }
         });
 
-
-
-
     }
 
     private void getSpecialPreComments(View fragmentView) {
@@ -190,6 +194,7 @@ public class PlaceOrderFragment extends Fragment {
         buttonPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String dishType = orderType;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
                 String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
@@ -197,83 +202,110 @@ public class PlaceOrderFragment extends Fragment {
                 String deliveryDate = userSelectedDeliveryDate;
                 String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
+                //Field validation
+                View focusView = null;
+                if (userSelectedChoclateType.equalsIgnoreCase("No choclates selected")){
+                    spinnerChoclatePicker.setError("Select chocolate");
+                    focusView = spinnerChoclatePicker;
+
+                    Toast.makeText(getActivity(),"Please select choclate type " + userSelectedChoclateType,Toast.LENGTH_LONG).show();
+                }
+                else if (sDryFruits.isEmpty()){
+                    Toast.makeText(getActivity(),"Dry fruits details is empty : " + sDryFruits,Toast.LENGTH_LONG).show();
+                    editTextSelectDryFruits.setError("Select dry fruits");
+                    focusView = editTextSelectDryFruits;
+
+                } else if (quantity <= 0){
+                    Toast.makeText(getActivity(),"Quantity should be greated than: " + quantity,Toast.LENGTH_LONG).show();
+                    buttonQuantity.setError("Quantity should be greated than: " + quantity);
+                    focusView = buttonAddQuantity;
+
+                } else if (deliveryDate.equalsIgnoreCase("No delivery date")){
+                    Toast.makeText(getActivity(),"Pick a delivery date",Toast.LENGTH_LONG).show();
+                    buttonDeliveryDate.setError("Pick a delivery date");
+                    focusView = buttonDeliveryDate;
+                }
+                else {
 
 
-                //Getting firebase user details
-                firebaseUser = firebaseAuth.getCurrentUser();
-                //Database initialization
-                databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
-                orderId = databaseReference.push().getKey();
-                orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments,iOrderValue);
+                    //Getting firebase user details
+                    firebaseUser = firebaseAuth.getCurrentUser();
+                    //Database initialization
+                    databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.order_details_firebase_database));
+                    orderId = databaseReference.push().getKey();
+                    orderDetails = new OrderDetails(orderId,dishType,userSelectedChoclateType,sDryFruits,quantity,deliveryDate,specialPreComments,iOrderValue);
 
-                //Alert Dailog box
-                final AlertDialog.Builder alertDialogConfirmOrder = new AlertDialog.Builder(getActivity());
+                    //Alert Dailog box
+                    final AlertDialog.Builder alertDialogConfirmOrder = new AlertDialog.Builder(getActivity());
 
-                alertDialogConfirmOrder.setTitle("Confirmation");
-                alertDialogConfirmOrder.setMessage("Are you sure you want to place order?. Order Value : " + iOrderValue);
+                    alertDialogConfirmOrder.setTitle("Confirmation");
+                    alertDialogConfirmOrder.setMessage("Are you sure you want to place order?. Order Value : " + iOrderValue);
 
-                alertDialogConfirmOrder.setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                    alertDialogConfirmOrder.setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //Progress dailog
-                                progressDialogPlaceOrder.setMessage("Placing Order...");
-                                progressDialogPlaceOrder.show();
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Progress dailog
+                            progressDialogPlaceOrder.setMessage("Placing Order...");
+                            progressDialogPlaceOrder.show();
 
 
-                                databaseReference.child("UserUniqueId"+firebaseUser.getUid()).child(orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
+                            databaseReference.child("UserUniqueId"+firebaseUser.getUid()).child(orderId).setValue(orderDetails).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
 
-                                            Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
-                                            progressDialogPlaceOrder.dismiss();
+                                        Toast.makeText(getActivity(),"Order Placed Successfully ",Toast.LENGTH_LONG).show();
+                                        progressDialogPlaceOrder.dismiss();
 //                            //Summary Fragment display
-                                            //Giving Issues
-                                            Fragment fragment = new MessagePostOrderPlacedFragment();
-                                            Bundle bundleArguments = new Bundle();
-                                            bundleArguments.putString("dishType",dishType);
-                                            bundleArguments.putString("orderId",orderId);
-                                            bundleArguments.putString("orderQuantity",Integer.toString(quantity));
-                                            bundleArguments.putString("orderValue",Integer.toString(iOrderValue));
-                                            fragment.setArguments(bundleArguments);
+                                        //Giving Issues
+                                        Fragment fragment = new MessagePostOrderPlacedFragment();
+                                        Bundle bundleArguments = new Bundle();
+                                        bundleArguments.putString("dishType",dishType);
+                                        bundleArguments.putString("orderId",orderId);
+                                        bundleArguments.putString("orderQuantity",Integer.toString(quantity));
+                                        bundleArguments.putString("orderValue",Integer.toString(iOrderValue));
+                                        fragment.setArguments(bundleArguments);
 
-                                            if (fragment !=null){
-                                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                                fragmentTransaction.replace(R.id.content_frame,fragment);
-                                                fragmentTransaction.commit();
+                                        if (fragment !=null){
+                                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                                            fragmentTransaction.replace(R.id.content_frame,fragment);
+                                            fragmentTransaction.commit();
 
-                                            }
-
-
-                                        }else {
-                                            Toast.makeText(getActivity(),"Failed to place order " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
                                         }
+
+
+                                    }else {
+                                        Toast.makeText(getActivity(),"Failed to place order " + task.getException().getMessage(),Toast.LENGTH_LONG).show();
                                     }
-                                });
+                                }
+                            });
 
 
-                                //Toast.makeText(getActivity(),"Inside Yes",Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+                            //Toast.makeText(getActivity(),"Inside Yes",Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
 
-                            }
-                        });
-                alertDialogConfirmOrder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        }
+                    });
+                    alertDialogConfirmOrder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                        // Do nothing
-                        Toast.makeText(getActivity(),"Inside NO",Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+                            // Do nothing
+                            Toast.makeText(getActivity(),"Inside NO",Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    });
 
-                AlertDialog alert = alertDialogConfirmOrder.create();
-                alert.show();
+                    AlertDialog alert = alertDialogConfirmOrder.create();
+                    alert.show();
+                }
 
 
-                //Toast.makeText(getActivity(),"Place Order",Toast.LENGTH_LONG).show();
+
+                    //Toast.makeText(getActivity(),"Place Order",Toast.LENGTH_LONG).show();
+
             }
         });
     }
@@ -284,8 +316,9 @@ public class PlaceOrderFragment extends Fragment {
         buttonDeliveryDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                buttonDeliveryDate.setError(null);
                 // Use the current date as the default date in the picker
-                final Calendar c = Calendar.getInstance();
+                c = Calendar.getInstance();
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
@@ -293,36 +326,16 @@ public class PlaceOrderFragment extends Fragment {
                 DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String deliveryDate = String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+                        iUserSelectedYear = year;
+                        iUserSelectedMonth = month;
+                        iUserSelectedDayOfMonth = dayOfMonth;
+
+                        deliveryDate= String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year);
+
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-                        Calendar choosenDate = Calendar.getInstance();
-                        choosenDate.set(year,month,dayOfMonth);
-                        if (choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY  || choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
 
-                            //buttonDeliveryDate.setTextColor(Color.parseColor("#B39DDB"));
-                            Toast.makeText(getActivity(),"Yo !! we deliver only on weekends.." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a"),Toast.LENGTH_LONG).show();
+                        validateDeliveryDate(iUserSelectedYear,iUserSelectedMonth,iUserSelectedDayOfMonth,deliveryDate);
 
-                            ((Button) getActivity().findViewById(R.id.btnDeliveryDate)).setText(deliveryDate);
-                            userSelectedDeliveryDate = buttonDeliveryDate.getText().toString().trim();
-
-                        }
-                        else if (choosenDate.before(c)){
-
-
-                            buttonDeliveryDate.setText("DATE IN PAST");
-                            buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
-                            Toast.makeText(getActivity(),"Oh no !! time never comes back !!" ,Toast.LENGTH_SHORT).show();
-                            return;
-
-                        }
-                        else {
-
-                            buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
-                            Toast.makeText(getActivity(),"Hey !! its not a weekend !!! we hate serving on weekdays they are so boring uhh " +
-                                    ("\ud83d\ude0c"),Toast.LENGTH_LONG).show();
-                            return;
-
-                        }
 
                     }
                 },year,month,day);
@@ -333,6 +346,37 @@ public class PlaceOrderFragment extends Fragment {
         });
 
 
+    }
+
+    private void validateDeliveryDate(int year, int month, int dayOfMonth,String deliveryDate) {
+        Calendar choosenDate = Calendar.getInstance();
+        choosenDate.set(year,month,dayOfMonth);
+        if (choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY  || choosenDate.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+
+            Toast.makeText(getActivity(),"Yo !! we deliver only on weekends.." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a")+"..." +("\ud83d\ude0a"),Toast.LENGTH_LONG).show();
+
+            ((Button) getActivity().findViewById(R.id.btnDeliveryDate)).setText(deliveryDate);
+            userSelectedDeliveryDate = buttonDeliveryDate.getText().toString().trim();
+
+        }
+        else if (choosenDate.before(c)){
+
+
+            buttonDeliveryDate.setText("DATE IN PAST");
+            buttonDeliveryDate.setError("DATE IN PAST");
+            //buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
+            Toast.makeText(getActivity(),"Oh no !! time never comes back !!" ,Toast.LENGTH_SHORT).show();
+            return;
+
+        }
+        else {
+            buttonDeliveryDate.setError("NOT A WEEKEND");
+            //buttonDeliveryDate.setTextColor(Color.parseColor("#ff0000"));
+            Toast.makeText(getActivity(),"Hey !! its not a weekend !!! we hate serving on weekdays they are so boring uhh " +
+                    ("\ud83d\ude0c"),Toast.LENGTH_LONG).show();
+            return;
+
+        }
     }
 
     private void showChoclateDropDown(View fragmentView) {
@@ -373,12 +417,14 @@ public class PlaceOrderFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     dryFruitMultiSelection();
+
                 }
             }
         });
         editTextSelectDryFruits.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editTextSelectDryFruits.setError(null);
                 dryFruitMultiSelection();
             }
         });

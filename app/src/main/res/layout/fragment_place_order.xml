@@ -82,7 +82,7 @@
                 <Button
                     android:id="@+id/btnQuantity"
                     android:layout_width="0.0dip" android:layout_height="fill_parent"
-                    android:text="quantity"
+                    android:text="0"
                     android:background="#B39DDB"
                     android:layout_weight="1.0" />
 
@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="We deliver only on Weekends !!"
+                    android:text="Pick delivery date"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
