@@ -25,7 +25,7 @@ public class MessagePostOrderPlacedFragment extends Fragment {
     TextView textViewOrderType;
     TextView textViewOrderId;
     TextView textViewQuantity;
-    TextView textViewOrderValue;
+    TextView textViewOrderValue,textViewDryFruits,textViewDeliveryDate,textViewSpecialInstructions,textViewPrice;
 
     Button buttonAddOrder;
     Button buttonDeleteOrder;
@@ -44,13 +44,23 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         String sOrderId = getArguments().getString("orderId");
         String sOrderQuantity = getArguments().getString("orderQuantity");
         String sOrderValue = getArguments().getString("orderValue");
+        String sDryFruits = getArguments().getString("dryFruits");
+        String sDeliveryDate = getArguments().getString("deliveryDate");
+        String sSpecialInstructions = getArguments().getString("specialInstructions");
+        String sPrice = getArguments().getString("price");
+
 
 
 
         textViewOrderPlacedMessage = (EditText) fragmentView.findViewById(R.id.textViewOrderPlacedMessage);
         textViewOrderId = (TextView) fragmentView.findViewById(R.id.textViewOrderId);
         textViewOrderType = (TextView) fragmentView.findViewById(R.id.textViewOrderType);
+        textViewDryFruits = (TextView) fragmentView.findViewById(R.id.textViewDryFruits);
         textViewQuantity = (TextView) fragmentView.findViewById(R.id.textViewOrderQuantity);
+        textViewDeliveryDate = (TextView) fragmentView.findViewById(R.id.textViewDeliveryDate);
+        textViewSpecialInstructions = (TextView) fragmentView.findViewById(R.id.textViewSpecialInstruction);
+        textViewPrice = (TextView) fragmentView.findViewById(R.id.textViewPrice);
+
         textViewOrderValue = (TextView) fragmentView.findViewById(R.id.textViewOrderValue);
 
         buttonAddOrder = (Button) fragmentView.findViewById(R.id.btnAddOrder);
@@ -75,9 +85,12 @@ public class MessagePostOrderPlacedFragment extends Fragment {
 //
         textViewOrderId.setText("Order Id : " + sOrderId);
         textViewOrderType.setText("Order Type : " + dishType);
+        textViewDryFruits.setText("Dry Fruits : " +  sDryFruits);
+        textViewDeliveryDate.setText("Delivery Date : " +  sDeliveryDate);
         textViewQuantity.setText("Order quantity : " +sOrderQuantity);
-        Toast.makeText(getActivity(),sOrderValue,Toast.LENGTH_SHORT).show();
+        textViewSpecialInstructions.setText("Special Instruction : " +sSpecialInstructions);
         textViewOrderValue.setText("Order Value : " + sOrderValue);
+        textViewPrice.setText("Price : " + sPrice);
 
         //textViewOrderPlacedMessage.setText("OrderPlaced Successfully" + dishType);
         return fragmentView;

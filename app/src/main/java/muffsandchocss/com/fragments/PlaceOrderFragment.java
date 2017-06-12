@@ -56,6 +56,7 @@ public class PlaceOrderFragment extends Fragment {
     String sUserSelectedDish;
     //Dry fruit selection
     EditText editTextSelectDryFruits;
+    String sDryFruits;
 
     //Choclate type
     MaterialBetterSpinner spinnerChoclatePicker;
@@ -81,7 +82,7 @@ public class PlaceOrderFragment extends Fragment {
     //Special preparation Comments
 
     EditText editTextSpecialPreComments;
-    String sSpecialPreComments;
+    String specialPreComments;
 
     //
     EditText textViewPrice;
@@ -197,10 +198,10 @@ public class PlaceOrderFragment extends Fragment {
 
                 final String dishType = orderType;
                 String userSelectedChoclateType = sUserSlectedChoclateType;
-                String sDryFruits = editTextSelectDryFruits.getText().toString().trim();
+                sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
-                String deliveryDate = userSelectedDeliveryDate;
-                String specialPreComments = editTextSpecialPreComments.getText().toString().trim();
+                deliveryDate = userSelectedDeliveryDate;
+                specialPreComments = editTextSpecialPreComments.getText().toString().trim();
 
                 //Field validation
                 View focusView = null;
@@ -263,7 +264,11 @@ public class PlaceOrderFragment extends Fragment {
                                         Bundle bundleArguments = new Bundle();
                                         bundleArguments.putString("dishType",dishType);
                                         bundleArguments.putString("orderId",orderId);
+                                        bundleArguments.putString("dryFruits",sDryFruits);
                                         bundleArguments.putString("orderQuantity",Integer.toString(quantity));
+                                        bundleArguments.putString("deliveryDate",deliveryDate);
+                                        bundleArguments.putString("specialInstructions",specialPreComments);
+                                        bundleArguments.putString("price",Integer.toString(price));
                                         bundleArguments.putString("orderValue",Integer.toString(iOrderValue));
                                         fragment.setArguments(bundleArguments);
 

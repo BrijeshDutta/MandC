@@ -88,7 +88,6 @@ public class OrderSummaryFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(),"View Order Summary Clicker",Toast.LENGTH_LONG).show();
                 showOrderDetailsInView();
             }
         });
