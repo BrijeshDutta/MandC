@@ -15,11 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
-    <Button
-        android:id="@+id/btnViewOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Order"/>
 
 
 </LinearLayout>

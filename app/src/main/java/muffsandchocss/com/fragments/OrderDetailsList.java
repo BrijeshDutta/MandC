@@ -38,22 +38,17 @@ public class OrderDetailsList extends ArrayAdapter<OrderDetails> {
         final View listViewItem = layoutInflater.inflate(R.layout.list_oder_summary,null,true);
         final TextView textViewHeader = (TextView) listViewItem.findViewById(R.id.textViewHeader);
         final TextView textViewOrderDetails = (TextView) listViewItem.findViewById(R.id.textViewOrderDetails);
-        Button buttonViewOrder = (Button) listViewItem.findViewById(R.id.btnViewOrder);
-        buttonViewOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(getContext(),"Coming soon functionality",Toast.LENGTH_LONG).show();
-//
-//                OrderDetails orderDetails = orderDetailsList.get(position);
-//                Toast.makeText(getContext(),"View Button click" + orderDetails.getOrderId(),Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        OrderDetails orderDetails = orderDetailsList.get(position);
+        final OrderDetails orderDetails = orderDetailsList.get(position);
         textViewHeader.setText("Order Id");
         textViewOrderDetails.setText(orderDetails.getOrderId());
+        textViewOrderDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"Order cliecked"+ orderDetails.getOrderId(),Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         return listViewItem;
