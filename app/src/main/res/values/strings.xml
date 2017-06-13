@@ -37,9 +37,12 @@
     <string name="welcome_label">Welcome</string>
     <string name="order_details_firebase_database">OrderDetails</string>
     <string-array name="dryfruit_list">
-        <item>Without Dry Fruits</item>
+        <item>Almond</item>
         <item>Cashews</item>
         <item>Raisins</item>
-        <item>hazelnut</item>
+        <item>Hazelnut</item>
+        <item>Peanut</item>
+        <item>Walnut</item>
+        <item>Black Raisin</item>
     </string-array>
 </resources>
