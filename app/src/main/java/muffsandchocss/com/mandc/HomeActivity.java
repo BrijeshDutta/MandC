@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "https://www.facebook.com/Muffs-And-Chocss-1145625375542101/", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
