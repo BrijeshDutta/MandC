@@ -32,6 +32,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
-    private Intent intentHomeActivity;
+    private Intent intentHomeActivity,intentUpdateUserProfile;
 
     //Firebase Object
     private FirebaseAuth firebaseAuth;
@@ -65,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         progressDialogPlaceOrder = new ProgressDialog(LoginActivity.this);
         intentHomeActivity = new Intent(this,HomeActivity.class);
+        intentUpdateUserProfile = new Intent(this,UpdateUserProfileActivity.class);
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Google sign in logic
@@ -177,7 +184,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            googleSignIn();
+                            googleSignIn(firebaseAuth.getCurrentUser().getUid());
                         } else {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -186,11 +193,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 });
     }
 
-    private void googleSignIn(){
+    private void googleSignIn(String sUid){
 
         progressDialogPlaceOrder.dismiss();
-            startActivity(intentHomeActivity);
-            finish();
+        checkIfUserDetailsUpdated(sUid);
+    }
+
+    private void checkIfUserDetailsUpdated(final String sUid) {
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.userdetails_firebase_database_reference));
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.child(sUid).hasChildren()){
+                    //addressAvailable = true;
+                    startActivity(intentHomeActivity);
+                    finish();
+                }else
+                {
+                    //addressAvailable = false;
+                    Toast.makeText(LoginActivity.this, "Update profile details.....",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(intentUpdateUserProfile);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(LoginActivity.this, "Database Error " + databaseError.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 

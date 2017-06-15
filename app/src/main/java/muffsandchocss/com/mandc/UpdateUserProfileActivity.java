@@ -66,7 +66,7 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
 
         //Database initialization
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.userdetails_firebase_database_reference));
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Set up the login form.

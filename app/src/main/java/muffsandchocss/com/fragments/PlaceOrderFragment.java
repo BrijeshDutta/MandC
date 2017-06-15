@@ -298,7 +298,7 @@ public class PlaceOrderFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
 
                             // Do nothing
-                            Toast.makeText(getActivity(),"Inside NO",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),"Oh noo !! u cancelled placing order !!",Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                         }
                     });
