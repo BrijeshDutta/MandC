@@ -37,6 +37,7 @@
     <string name="welcome_label">Welcome</string>
     <string name="order_details_firebase_database">OrderDetails</string>
     <string name="userdetails_firebase_database_reference">UserDetails</string>
+    <string name="user_profile_label">User Profile</string>
     <string-array name="dryfruit_list">
         <item>Almond</item>
         <item>Cashews</item>

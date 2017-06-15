@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import muffsandchocss.com.fragments.BaseFragment;
 import muffsandchocss.com.fragments.OrderSummaryFragment;
@@ -29,7 +34,10 @@ import muffsandchocss.com.fragments.UserProfileFragment;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+
 
     private TextView textViewUserName;
     private TextView textViewUserEmailId;
@@ -40,6 +48,11 @@ public class HomeActivity extends AppCompatActivity
     Fragment fragment = null;
     FragmentTransaction fragmentTransaction;
 
+    //Get userdetails
+    String sUserName;
+    String sUserEmailId;
+    String sUserAddress;
+    String sUserMobileNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,8 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Populate user details required in user profile
+        populateUserDetails();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +101,44 @@ public class HomeActivity extends AppCompatActivity
         }
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    private void populateUserDetails(){
+
+        //implementent Edit functionality
+        //Toast.makeText(getActivity(),"Update user details",Toast.LENGTH_SHORT).show();
+        //Getting firebase user details
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference(getString(R.string.userdetails_firebase_database_reference));
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(firebaseUser.getUid()).hasChildren()){
+                    //Toast.makeText(getActivity(),"Details exist",Toast.LENGTH_SHORT).show();
+
+                    sUserAddress = (String) dataSnapshot.child(firebaseUser.getUid()).child("address").getValue();
+                    //Toast.makeText(getActivity(),"Address " + sAddress,Toast.LENGTH_SHORT).show();
+
+                    sUserMobileNo = (String) dataSnapshot.child(firebaseUser.getUid()).child("mobile").getValue();
+                    //Toast.makeText(getActivity(),"Contact no" +mobile ,Toast.LENGTH_SHORT).show();
+
+                    sUserName = firebaseUser.getDisplayName();
+                    sUserEmailId =firebaseUser.getEmail();
+                }else {
+
+                    Toast.makeText(getApplicationContext(),"No Details Available !! Please update the details",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(getApplicationContext(),"Db Error " + databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -132,6 +185,12 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_profile:
                 fragment = new UserProfileFragment();
+                Bundle bundleArguments = new Bundle();
+                bundleArguments.putString("userName",sUserName);
+                bundleArguments.putString("userEmailId",sUserEmailId);
+                bundleArguments.putString("userAddress",sUserAddress);
+                bundleArguments.putString("userMobileNo",sUserMobileNo);
+                fragment.setArguments(bundleArguments);
                 break;
             case  R.id.nav_logout:
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
