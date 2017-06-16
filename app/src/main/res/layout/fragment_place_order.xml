@@ -34,6 +34,7 @@
                     android:layout_marginRight="5dp"
                     android:hint="@string/choclate_type_label"
                     android:textColor="@android:color/white"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                     />
 
             </android.support.design.widget.TextInputLayout>

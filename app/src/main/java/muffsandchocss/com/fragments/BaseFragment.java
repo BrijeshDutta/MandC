@@ -35,7 +35,7 @@ public class BaseFragment extends Fragment {
 
                     fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.content_frame,fragment);
-                    fragmentTransaction.commit();
+                    fragmentTransaction.addToBackStack("base").commit();
                 }
             }
         });

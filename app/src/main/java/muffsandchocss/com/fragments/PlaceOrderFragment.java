@@ -45,7 +45,7 @@ public class PlaceOrderFragment extends Fragment {
 
 
     String [] SPINNER_LIST_DISH = {"Choclates","Muffins"};
-    String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milky"};
+    String [] SPINNER_CHOCLATE_TYPE = {"Dark","Milk","White"};
 
 
     //
@@ -389,7 +389,7 @@ public class PlaceOrderFragment extends Fragment {
         //Drop down to select type of dish
         spinnerChoclatePicker = (MaterialBetterSpinner) fragmentView.findViewById(R.id.choclateType);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, SPINNER_CHOCLATE_TYPE);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.support_simple_spinner_dropdown_item, SPINNER_CHOCLATE_TYPE);
         spinnerChoclatePicker.setAdapter(adapter);
         spinnerChoclatePicker.addTextChangedListener(new TextWatcher() {
             @Override
