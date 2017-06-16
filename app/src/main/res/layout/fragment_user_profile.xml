@@ -10,7 +10,7 @@
         <ImageView
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="190dp"
             android:scaleType="centerCrop"
             android:src="@drawable/mandc_mainlogog" />
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
-            android:background="#ebca0707"
+            android:background="#B39DDB"
             android:elevation="4dp"
             android:paddingBottom="24dp">
 
@@ -97,13 +97,12 @@
                 android:text="Mobile #" />
             <Button
                 android:id="@+id/btn_update_user_details"
+
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="#fff"
-                android:clickable="true"
-                android:elevation="4dp"
-                android:padding="20dp"
+                android:layout_marginTop="16dp"
+                android:background="#673AB7"
+                android:textColor="#fff"
                 android:text="Update Details" />
         </LinearLayout>
     </RelativeLayout>
