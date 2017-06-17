@@ -172,7 +172,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             GoogleSignInAccount googleSignInAccount    = googleSignInResult.getSignInAccount();
             firebaseAuthWithGoogle(googleSignInAccount);
         }else{
-            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Problem with database please try after some time", Toast.LENGTH_LONG).show();
+            progressDialogPlaceOrder.dismiss();
         }
     }
 
