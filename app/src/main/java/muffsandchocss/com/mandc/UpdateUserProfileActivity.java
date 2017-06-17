@@ -91,6 +91,7 @@ public class UpdateUserProfileActivity extends AppCompatActivity {
                 else {
                     saveUserInformation();
                     startActivity(intentHomeActivity);
+                    finish();
 
                 }
             }
