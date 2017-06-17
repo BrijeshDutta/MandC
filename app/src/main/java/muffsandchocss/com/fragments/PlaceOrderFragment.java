@@ -61,6 +61,7 @@ public class PlaceOrderFragment extends Fragment {
     //Choclate type
     MaterialBetterSpinner spinnerChoclatePicker;
     String sUserSlectedChoclateType = "No choclates selected";
+    String userSelectedChoclateType;
 
     //Quantity
     Button buttonQuantity,buttonAddQuantity,buttonRemoveQuantity;
@@ -197,7 +198,7 @@ public class PlaceOrderFragment extends Fragment {
             public void onClick(View v) {
 
                 final String dishType = orderType;
-                String userSelectedChoclateType = sUserSlectedChoclateType;
+                userSelectedChoclateType = sUserSlectedChoclateType;
                 sDryFruits = editTextSelectDryFruits.getText().toString().trim();
                 quantity = Integer.parseInt(buttonQuantity.getText().toString().trim());
                 deliveryDate = userSelectedDeliveryDate;
@@ -212,7 +213,7 @@ public class PlaceOrderFragment extends Fragment {
                     Toast.makeText(getActivity(),"Please select choclate type " + userSelectedChoclateType,Toast.LENGTH_LONG).show();
                 }
                 else if (sDryFruits.isEmpty()){
-                    Toast.makeText(getActivity(),"Dry fruits details is empty : " + sDryFruits,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Please select dry fruits : " + sDryFruits,Toast.LENGTH_LONG).show();
                     editTextSelectDryFruits.setError("Select dry fruits");
                     focusView = editTextSelectDryFruits;
 
@@ -264,6 +265,7 @@ public class PlaceOrderFragment extends Fragment {
                                         Bundle bundleArguments = new Bundle();
                                         bundleArguments.putString("dishType",dishType);
                                         bundleArguments.putString("orderId",orderId);
+                                        bundleArguments.putString("choclateType",userSelectedChoclateType);
                                         bundleArguments.putString("dryFruits",sDryFruits);
                                         bundleArguments.putString("orderQuantity",Integer.toString(quantity));
                                         bundleArguments.putString("deliveryDate",deliveryDate);

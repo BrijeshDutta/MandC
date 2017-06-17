@@ -25,7 +25,7 @@ public class MessagePostOrderPlacedFragment extends Fragment {
     TextView textViewOrderType;
     TextView textViewOrderId;
     TextView textViewQuantity;
-    TextView textViewOrderValue,textViewDryFruits,textViewDeliveryDate,textViewSpecialInstructions,textViewPrice;
+    TextView textViewOrderValue,textViewDryFruits,textViewDeliveryDate,textViewSpecialInstructions,textViewPrice,textViewChoclateType;
 
     Button buttonAddOrder;
     Button buttonDeleteOrder;
@@ -48,6 +48,7 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         String sDeliveryDate = getArguments().getString("deliveryDate");
         String sSpecialInstructions = getArguments().getString("specialInstructions");
         String sPrice = getArguments().getString("price");
+        String sChoclateType = getArguments().getString("choclateType");
 
 
 
@@ -60,8 +61,9 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         textViewDeliveryDate = (TextView) fragmentView.findViewById(R.id.textViewDeliveryDate);
         textViewSpecialInstructions = (TextView) fragmentView.findViewById(R.id.textViewSpecialInstruction);
         textViewPrice = (TextView) fragmentView.findViewById(R.id.textViewPrice);
-
         textViewOrderValue = (TextView) fragmentView.findViewById(R.id.textViewOrderValue);
+        textViewChoclateType = (TextView) fragmentView.findViewById(R.id.textViewChoclateType);
+
 
         buttonAddOrder = (Button) fragmentView.findViewById(R.id.btnAddOrder);
         buttonAddOrder.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +93,7 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         textViewSpecialInstructions.setText("Special Instruction : " +sSpecialInstructions);
         textViewOrderValue.setText("Order Value : " + sOrderValue);
         textViewPrice.setText("Price : " + sPrice);
+        textViewChoclateType.setText("Chocolate Type : " + sChoclateType);
 
         //textViewOrderPlacedMessage.setText("OrderPlaced Successfully" + dishType);
         return fragmentView;
