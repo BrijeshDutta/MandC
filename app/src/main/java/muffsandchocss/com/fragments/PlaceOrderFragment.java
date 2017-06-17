@@ -213,7 +213,7 @@ public class PlaceOrderFragment extends Fragment {
                     Toast.makeText(getActivity(),"Please select choclate type " + userSelectedChoclateType,Toast.LENGTH_LONG).show();
                 }
                 else if (sDryFruits.isEmpty()){
-                    Toast.makeText(getActivity(),"Please select dry fruits : " + sDryFruits,Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Please select dry fruits" + sDryFruits,Toast.LENGTH_LONG).show();
                     editTextSelectDryFruits.setError("Select dry fruits");
                     focusView = editTextSelectDryFruits;
 
