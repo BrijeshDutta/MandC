@@ -76,7 +76,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //Google sign in logic
 
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail()
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id)).requestEmail()
                 .build();
         mgoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
