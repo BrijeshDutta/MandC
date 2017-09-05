@@ -62,12 +62,12 @@ public class BaseFragment extends Fragment {
                         Fragment fragment=null;
                         switch (i) {
                             case 0:
-                                //Toast.makeText(view.getContext(), "position= " + i, Toast.LENGTH_LONG).show();
-                                fragment = new PlaceOrderFragment();
-
-                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                fragmentTransaction.replace(R.id.content_frame,fragment);
-                                fragmentTransaction.addToBackStack("home").commit();
+//                                //Toast.makeText(view.getContext(), "position= " + i, Toast.LENGTH_LONG).show();
+//                                fragment = new PlaceOrderFragment();
+//
+//                                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                                fragmentTransaction.replace(R.id.content_frame,fragment);
+//                                fragmentTransaction.addToBackStack("home").commit();
 
 
                                 break;

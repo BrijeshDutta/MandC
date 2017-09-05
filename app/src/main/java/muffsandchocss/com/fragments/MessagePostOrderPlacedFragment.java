@@ -69,12 +69,12 @@ public class MessagePostOrderPlacedFragment extends Fragment {
         buttonAddOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment = new PlaceOrderFragment();
-                if (fragment != null){
-                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.content_frame,fragment);
-                    fragmentTransaction.commit();
-                }
+//                fragment = new PlaceOrderFragment();
+//                if (fragment != null){
+//                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                    fragmentTransaction.replace(R.id.content_frame,fragment);
+//                    fragmentTransaction.commit();
+//                }
             }
         });
         buttonDeleteOrder = (Button) fragmentView.findViewById(R.id.btnRemoveOrder);

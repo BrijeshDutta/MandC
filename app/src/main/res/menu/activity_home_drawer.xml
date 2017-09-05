@@ -4,15 +4,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/home"
-            android:title="Home" />
+            android:title="Home"/>
         <item
             android:id="@+id/nav_place_order"
             android:icon="@drawable/purchaseorder"
-            android:title="Place Order" />
+            android:title="Place Order"/>
         <item
-            android:id="@+id/nav_order_summary"
+            android:id="@+id/nav_orders"
             android:icon="@drawable/ordersummary"
-            android:title="Order Summary" />
+            android:title="Orders" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="Cart" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/userprofileicon"

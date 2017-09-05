@@ -274,12 +274,12 @@ public class PlaceOrderFragment extends Fragment {
                                         bundleArguments.putString("orderValue",Integer.toString(iOrderValue));
                                         fragment.setArguments(bundleArguments);
 
-                                        if (fragment !=null){
-                                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                                            fragmentTransaction.replace(R.id.content_frame,fragment);
-                                            fragmentTransaction.commit();
-
-                                        }
+//                                        if (fragment !=null){
+//                                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//                                            fragmentTransaction.replace(R.id.content_frame,fragment);
+//                                            fragmentTransaction.commit();
+//
+//                                        }
 
 
                                     }else {

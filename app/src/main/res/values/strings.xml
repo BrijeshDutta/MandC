@@ -38,6 +38,12 @@
     <string name="order_details_firebase_database">OrderDetails</string>
     <string name="userdetails_firebase_database_reference">UserDetails</string>
     <string name="user_profile_label">User Profile</string>
+    <string name="slogan">Have a sweet tooth ....Try us !!</string>
+    <string name="signup">Sign Up</string>
+    <string name="signIn">Sign In</string>
+    <string name="phonenumberhint">Phone number</string>
+    <string name="hintname">Name</string>
+    <string name="passwordhint">Password</string>
     <string-array name="dryfruit_list">
         <item>Almond</item>
         <item>Cashews</item>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import muffsandchocss.com.MainActivity;
 import muffsandchocss.com.mandc.LoginActivity;
 import muffsandchocss.com.mandc.R;
 
@@ -19,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(3000);
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
                 } catch (InterruptedException e) {

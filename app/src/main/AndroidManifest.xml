@@ -5,6 +5,7 @@
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/mandc"
@@ -21,8 +22,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".RegisterUserActivity"
             android:label="@string/title_activity_register_user" />
@@ -33,7 +33,11 @@
             android:name=".HomeActivity"
             android:label="@string/muffs_and_chocss"
             android:theme="@style/AppTheme" />
-
+        <activity android:name="muffsandchocss.com.MainActivity" />
+        <activity android:name="muffsandchocss.com.SignInActivity" />
+        <activity android:name="muffsandchocss.com.SignUpActivity" />
+        <activity android:name="muffsandchocss.com.FoodList" />
+        <activity android:name="muffsandchocss.com.FoodDetail"></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,11 +28,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import muffsandchocss.com.FoodList;
+import muffsandchocss.com.Interface.ItemClickListener;
+import muffsandchocss.com.ViewHolder.MenuViewHolder;
+import muffsandchocss.com.common.Common;
 import muffsandchocss.com.fragments.BaseFragment;
 import muffsandchocss.com.fragments.OrderSummaryFragment;
 import muffsandchocss.com.fragments.PlaceOrderFragment;
 import muffsandchocss.com.fragments.UserProfileFragment;
+import muffsandchocss.com.model.Category;
+import muffsandchocss.com.model.Food;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
     FirebaseUser firebaseUser;
 
 
-    private TextView textViewUserName;
+
     private TextView textViewUserEmailId;
 
     private Intent intentLoginActivity;
@@ -54,30 +64,48 @@ public class HomeActivity extends AppCompatActivity
     String sUserAddress;
     String sUserMobileNo;
 
+    //NEW
+
+    FirebaseDatabase database;
+    DatabaseReference category;
+
+    private TextView textViewUserName;
+    RecyclerView recycler_menu;
+    RecyclerView.LayoutManager layoutManager;
+
+    FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //
-        intentLoginActivity = new Intent(this,LoginActivity.class);
-        firebaseAuth = FirebaseAuth.getInstance();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        //navUsername = (TextView) headerView.findViewById(R.id.navUsername);
-        textViewUserName =(TextView) headerView.findViewById(R.id.txtViewUserEmail);
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        String getEmail = firebaseUser.getEmail();
-        textViewUserName.setText(getEmail);
+        textViewUserName =(TextView) headerView.findViewById(R.id.txtViewUserName);
+        textViewUserName.setText(Common.currentUser.getName());
 
-        Toast.makeText(HomeActivity.this,getString(R.string.welcome_label)+" " + getEmail,Toast.LENGTH_LONG).show();
+        //Toast.makeText(HomeActivity.this,getString(R.string.welcome_label)+" " + getEmail,Toast.LENGTH_LONG).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
 
-        //Populate user details required in user profile
-        populateUserDetails();
+        //Init Firebase
+
+        database = FirebaseDatabase.getInstance();
+        category = database.getReference("Category");
+
+        //Load menu
+
+        recycler_menu = (RecyclerView) findViewById(R.id.recycler_menu);
+        recycler_menu.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recycler_menu.setLayoutManager(layoutManager);
+
+        loadMenu();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +120,35 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        fragment = new BaseFragment();
-        if (fragment !=null){
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_frame,fragment);
-            fragmentTransaction.commit();
-
-        }
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void loadMenu() {
+
+        adapter= new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+            @Override
+            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
+                viewHolder.txtMenuName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
+
+                final Category clickItem = model;
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Toast.makeText(HomeActivity.this,"" +clickItem.getName(),Toast.LENGTH_SHORT).show();
+
+                        //Get category and send it to new Activity
+
+                        Intent foodList = new Intent(HomeActivity.this, FoodList.class);
+                        foodList.putExtra("CategoryId",adapter.getRef(position).getKey());
+                        startActivity(foodList);
+
+                    }
+                });
+            }
+        };
+
+        recycler_menu.setAdapter(adapter);
     }
 
     private void populateUserDetails(){
@@ -180,7 +229,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_place_order:
                 fragment = new PlaceOrderFragment();
                 break;
-            case R.id.nav_order_summary:
+            case R.id.nav_orders:
                 fragment = new OrderSummaryFragment();
                 break;
             case R.id.nav_profile:
@@ -203,12 +252,12 @@ public class HomeActivity extends AppCompatActivity
 
         }
 
-        if (fragment !=null){
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_frame,fragment);
-            fragmentTransaction.commit();
-
-        }
+//        if (fragment !=null){
+//            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.content_frame,fragment);
+//            fragmentTransaction.commit();
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
