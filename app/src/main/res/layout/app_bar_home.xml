@@ -30,7 +30,6 @@
         android:src="@drawable/ic_shopping_cart_black_24dp"
         app:backgroundTint="@android:color/white"
         android:layout_gravity="bottom|end"
-
         app:borderWidth="0dp" />
 
 </android.support.design.widget.CoordinatorLayout>
