@@ -44,6 +44,7 @@
     <string name="phonenumberhint">Phone number</string>
     <string name="hintname">Name</string>
     <string name="passwordhint">Password</string>
+    <string name="place_order">Place Order</string>
     <string-array name="dryfruit_list">
         <item>Almond</item>
         <item>Cashews</item>

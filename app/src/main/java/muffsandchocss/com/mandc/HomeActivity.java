@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import muffsandchocss.com.Cart;
 import muffsandchocss.com.FoodList;
 import muffsandchocss.com.Interface.ItemClickListener;
 import muffsandchocss.com.ViewHolder.MenuViewHolder;
@@ -110,8 +111,9 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "https://www.facebook.com/Muffs-And-Chocss-1145625375542101/", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent cartIntent = new Intent(HomeActivity.this, Cart.class);
+                startActivity(cartIntent);
             }
         });
 
