@@ -33,6 +33,8 @@ import com.squareup.picasso.Picasso;
 import muffsandchocss.com.Cart;
 import muffsandchocss.com.FoodList;
 import muffsandchocss.com.Interface.ItemClickListener;
+import muffsandchocss.com.OrderStatus;
+import muffsandchocss.com.SignInActivity;
 import muffsandchocss.com.ViewHolder.MenuViewHolder;
 import muffsandchocss.com.common.Common;
 import muffsandchocss.com.fragments.BaseFragment;
@@ -232,24 +234,19 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new PlaceOrderFragment();
                 break;
             case R.id.nav_orders:
-                fragment = new OrderSummaryFragment();
+                Intent orderIntent = new Intent(HomeActivity.this, OrderStatus.class);
+                startActivity(orderIntent);
                 break;
             case R.id.nav_profile:
-                fragment = new UserProfileFragment();
-                Bundle bundleArguments = new Bundle();
-                bundleArguments.putString("userName",sUserName);
-                bundleArguments.putString("userEmailId",sUserEmailId);
-                bundleArguments.putString("userAddress",sUserAddress);
-                bundleArguments.putString("userMobileNo",sUserMobileNo);
-                fragment.setArguments(bundleArguments);
+                break;
+            case R.id.nav_cart:
+                Intent cartIntent = new Intent(HomeActivity.this, Cart.class);
+                startActivity(cartIntent);
                 break;
             case  R.id.nav_logout:
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null){
-                    firebaseAuth.signOut();
-                    finish();
-                    startActivity(intentLoginActivity);
-                }
+                Intent signInIntent = new Intent(HomeActivity.this, SignInActivity.class);
+                signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(signInIntent);
                 break;
 
         }
